@@ -1,0 +1,17 @@
+echo Enter a
+read a
+echo Enter b
+read b
+if test $a -gt $b
+then
+	echo $a is greater than $b
+else
+	echo $b is greater than $a
+fi
+
+if test $1 -gt $2
+then
+	echo $1 is greater than $2
+else
+	echo $2 is greater than $1
+fi

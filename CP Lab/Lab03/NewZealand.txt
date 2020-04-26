@@ -1,0 +1,9 @@
+Jun 01, Sat,	NewZealand vs SriLanka, Match 3	,Afternoon,	Cardiff
+Jun 05, Wed,	Bangladesh vs NewZealand, Match 9	,Evening,	London
+Jun 08, Sat,	Afghanistan vs NewZealand, Match 13	,Evening,	Taunton
+Jun 13, Thu,	India vs NewZealand, Match 18	,Afternoon,	Nottingham
+Jun 19, Wed,	NewZealand vs SouthAfrica, Match 25	,Afternoon,	Birmingham
+Jun 22, Sat,	Windies vs NewZealand, Match 29	,Evening,	Manchester
+Jun 26, Wed,	NewZealand vs Pakistan, Match 33	,Afternoon,	Birmingham
+Jun 29, Sat,	NewZealand vs Australia, Match 37	,Evening,	Lords
+Jul 03, Wed,	England vs NewZealand, Match 41	,Afternoon,	Chester-Le-Street

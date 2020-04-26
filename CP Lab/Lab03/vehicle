@@ -1,0 +1,8 @@
+rental=$1
+case $rental in
+"car") echo "For $rental Rs.400 per day";;
+"van") echo "For $rental Rs.500 per day";;
+"jeep") echo "For $rental Rs.300 per day";;
+"bicycle") echo "For $rental Rs.20 per day";;
+*) echo "Sorry, I cannot get a $rental for you";;
+esac

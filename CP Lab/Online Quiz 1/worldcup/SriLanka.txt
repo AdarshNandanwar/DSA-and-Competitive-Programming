@@ -1,0 +1,9 @@
+Jun 01, Sat,	NewZealand vs SriLanka, Match 3	,Afternoon,	Cardiff
+Jun 04, Tue,	Afghanistan vs SriLanka, Match 7	,Afternoon,	Cardiff
+Jun 07, Fri,	Pakistan vs SriLanka, Match 11	,Afternoon,	Bristol
+Jun 11, Tue,	Bangladesh vs SriLanka, Match 16	,Afternoon,	Bristol
+Jun 15, Sat,	SriLanka vs Australia, Match 20	,Afternoon,	London
+Jun 21, Fri,	England vs SriLanka, Match 27	,Afternoon,	Leeds
+Jun 28, Fri,	SriLanka vs SouthAfrica, Match 35	,Afternoon,	Chester-Le-Street
+Jul 01, Mon,	SriLanka vs Windies, Match 39	,Afternoon,	Chester-Le-Street
+Jul 06, Sat,	SriLanka vs India, Match 44	,Afternoon,	Leeds

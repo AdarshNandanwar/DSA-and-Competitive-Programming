@@ -1,0 +1,5 @@
+#this script asks user to input his name and then print his name
+echo What is your name ?
+read name
+echo Hello $name. Happy Programming
+

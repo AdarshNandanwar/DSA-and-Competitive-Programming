@@ -1,0 +1,27 @@
+echo Enter an number between 10 to 99 
+read a
+
+if test `expr $a % 2` -eq 0
+then
+	echo The divisors are:
+	j=1;
+	while [ $j -le `expr $a / 2` ]
+	do
+		if [ `expr $a % $j` -eq 0 ]
+		then 
+			echo $j
+		fi
+		j=`expr $j + 1`
+	done
+	echo $a	
+else
+	sum=0
+	while [ $a -ne 0 ]
+	do
+		sum=`expr $sum + \( $a % 10 \)`
+		a=`expr $a / 10`
+	done
+	echo The sum of digits is $sum
+fi
+
+

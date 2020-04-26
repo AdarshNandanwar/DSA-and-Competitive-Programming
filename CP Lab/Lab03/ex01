@@ -1,0 +1,28 @@
+if test $# -eq 0
+then
+	echo Enter a number to reverse
+	exit 1
+fi
+
+a=$1
+place=1
+num=0
+
+while [ `expr $a / $place` -ne 0 ]
+do
+	place=`expr $place \* 10`
+done
+
+place=`expr $place / 10`	
+
+a=$1
+
+while [ $a -ne 0 ]
+do 
+	d=`expr $a % 10`
+	num=`expr $num + \( $place \* $d \)`
+	a=`expr $a / 10`
+	place=`expr $place / 10`
+done
+
+echo $num

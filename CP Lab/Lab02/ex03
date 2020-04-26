@@ -1,0 +1,3 @@
+echo Enter a command
+read command
+$command

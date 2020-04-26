@@ -1,0 +1,13 @@
+total 40
+-rw-r--r-- 1 adarsh adarsh 232 Jan 25  2019 arithmetic
+-rw-r--r-- 1 adarsh adarsh   0 Jan 25  2019 cat
+-rw-r--r-- 1 adarsh adarsh  12 Jan 25  2019 ex01
+-rw-r--r-- 1 adarsh adarsh  24 Jan 25  2019 ex02
+-rw-r--r-- 1 adarsh adarsh 137 Jan 25  2019 first
+-rw-r--r-- 1 adarsh adarsh  45 Jan 25  2019 firstShellPgm
+-rw-r--r-- 1 adarsh adarsh 114 Jan 25  2019 food
+-rwxr-xr-x 1 adarsh adarsh 230 Jan 25  2019 isPos
+-rwxr-xr-x 1 adarsh adarsh  48 Jan 25  2019 ispositive
+-rwxr-xr-x 1 adarsh adarsh 128 Jan 25  2019 secondShellPgm
+-rw-r--r-- 1 adarsh adarsh 627 Jan 25  2019 temp
+-rw-r--r-- 1 adarsh adarsh   0 Jan 25 01:26 wc

@@ -1,0 +1,10 @@
+#this script performs different arithmetic operations on two numbers
+a=$1
+b=$2
+echo `expr $a + $b`
+echo `expr $a - $b`
+echo `expr $a \* $b`
+#multiplication
+echo `expr $a / $b`
+echo `expr $a % $b`
+#modular division, returns reminder

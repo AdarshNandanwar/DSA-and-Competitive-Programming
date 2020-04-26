@@ -1,0 +1,9 @@
+May 30, Thu,	England vs SouthAfrica, 	Match 1	,Afternoon,	London
+Jun 02, Sun,	SouthAfrica vs Bangladesh, Match 5	,Afternoon,	London
+Jun 05, Wed,	SouthAfrica vs India, Match 8	,Afternoon,	Southampton
+Jun 10, Mon,	SouthAfrica vs Windies, Match 15	,Afternoon,	Southampton
+Jun 15, Sat,	SouthAfrica vs Afghanistan, Match 21	,Evening,	Cardiff
+Jun 19, Wed,	NewZealand vs SouthAfrica, Match 25	,Afternoon,	Birmingham
+Jun 23, Sun,	Pakistan vs SouthAfrica, Match 30	,Afternoon,	Lords
+Jun 28, Fri,	SriLanka vs SouthAfrica, Match 35	,Afternoon,	Chester-Le-Street
+Jul 06, Sat,	Australia vs SouthAfrica, Match 45	,Evening,	Manchester	

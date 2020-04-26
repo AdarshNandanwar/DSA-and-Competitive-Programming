@@ -1,0 +1,9 @@
+Jun 05, Wed,	SouthAfrica vs India, Match 8	,Afternoon,	Southampton
+Jun 09, Sun,	India vs Australia, Match 14	,Afternoon,	London
+Jun 13, Thu,	India vs NewZealand, Match 18	,Afternoon,	Nottingham
+Jun 16, Sun,	India vs Pakistan, Match 22	,Afternoon,	Manchester
+Jun 22, Sat,	India vs Afghanistan, Match 28	,Afternoon,	Southampton
+Jun 27, Thu,	Windies vs India, Match 34	,Afternoon,	Manchester
+Jun 30, Sun,	England vs India, Match 38	,Afternoon,	Birmingham
+Jul 02, Tue,	Bangladesh vs India, Match 40	,Afternoon,	Birmingham
+Jul 06, Sat,	SriLanka vs India, Match 44	,Afternoon,	Leeds

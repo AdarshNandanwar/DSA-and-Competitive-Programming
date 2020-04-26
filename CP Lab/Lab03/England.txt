@@ -1,0 +1,9 @@
+May 30, Thu,	England vs SouthAfrica, 	Match 1	,Afternoon,	London
+Jun 03, Mon,	England vs Pakistan, Match 6	,Afternoon,	Nottingham
+Jun 08, Sat,	England vs Bangladesh, Match 12	,Afternoon,	Cardiff
+Jun 14, Fri,	England vs Windies, Match 19	,Afternoon,	Southampton
+Jun 18, Tue,	England vs Afghanistan, Match 24	,Afternoon,	Manchester
+Jun 21, Fri,	England vs SriLanka, Match 27	,Afternoon,	Leeds
+Jun 25, Tue,	England vs Australia, Match 32	,Afternoon,	Lords
+Jun 30, Sun,	England vs India, Match 38	,Afternoon,	Birmingham
+Jul 03, Wed,	England vs NewZealand, Match 41	,Afternoon,	Chester-Le-Street

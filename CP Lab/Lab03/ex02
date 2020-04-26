@@ -1,0 +1,28 @@
+echo Enter 2 space seperated numbers
+read a b
+
+if test $a -eq $b
+then
+	echo The GCD of $a and $b is $a
+else
+	if test $a -gt $b
+	then 
+		l=$a
+	else 
+		l=$b
+	fi
+
+	i=1
+	gcd=1
+
+	while [ $i -le `expr $l / 2` ]
+	do
+		if [ `expr $a % $i` -eq 0 -a `expr $b % $i` -eq 0 ]
+		then
+			gcd=$i
+		fi
+		i=`expr $i + 1`
+	done
+
+	echo The GCD of $a and $b is $gcd
+fi

@@ -1,0 +1,9 @@
+Jun 01, Sat,	Afghanistan vs Australia, Match 4	,Evening,	Bristol
+Jun 04, Tue,	Afghanistan vs SriLanka, Match 7	,Afternoon,	Cardiff
+Jun 08, Sat,	Afghanistan vs NewZealand, Match 13	,Evening,	Taunton
+Jun 15, Sat,	SouthAfrica vs Afghanistan, Match 21	,Evening,	Cardiff
+Jun 18, Tue,	England vs Afghanistan, Match 24	,Afternoon,	Manchester
+Jun 22, Sat,	India vs Afghanistan, Match 28	,Afternoon,	Southampton
+Jun 24, Mon,	Bangladesh vs Afghanistan, Match 31	,Afternoon,	Southampton
+Jun 29, Sat,	Pakistan vs Afghanistan, Match 36	,Afternoon,	Leeds
+Jul 04, Thu,	Afghanistan vs Windies, Match 42	,Afternoon,	Leeds

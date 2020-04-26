@@ -1,0 +1,6 @@
+2018001 Yash 8
+2018002 Smriti 9
+2018003 Sammer 7
+2018004 Avani 10
+2018005 Akash 6
+2018006 Mayank 8

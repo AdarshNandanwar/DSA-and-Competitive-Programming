@@ -1,0 +1,3 @@
+echo Enter a string
+read str
+if test ls -l | grep $str

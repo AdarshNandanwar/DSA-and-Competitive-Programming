@@ -1,0 +1,10 @@
+	Afghanistan
+	Australia
+	Bangladesh
+	England
+	India
+	NewZealand
+	Pakistan
+	SouthAfrica
+	SriLanka
+	Windies
