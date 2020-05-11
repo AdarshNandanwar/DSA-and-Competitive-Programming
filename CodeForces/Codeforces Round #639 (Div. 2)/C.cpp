@@ -7,29 +7,22 @@ ll n;
 
 void solve(){
     cin>>n;
-    vector<ll> v;
+    vector<ll> v(n);
     for(int i =0; i<n; i++){
-        ll temp;
-        cin>>temp;
-        v.push_back(temp);
+        cin>>v[i];
     }
-    unordered_map<int, int> mp;
-    vector<ll> nv(n);
+    set<ll> s;
     for(int i = 0; i<n; i++){
-        ll k = v[i];
-        ll mod = (k%n);
-        cout<<mod<<" ";
-        // if(mod<0) mod+=n;
-        nv[i] = k+(v[mod]);
-        // if(mp[nv[i]]){
-        //     cout<<"NO\n";
-        //     return;
-        // }
-        // mp[nv[i]]++;
-        // cout<<nv[i]<<" ";
-    }cout<<endl;
-    // cout<<"YES\n";
-    
+        ll temp = (i+v[i])%n;
+        if(temp<0) temp+=n;
+        if(s.find(temp) != s.end()){
+            cout<<"NO\n";
+            return;
+        }
+        s.insert(temp);
+    }
+    cout<<"YES\n";
+    return;
 }
  
 int main(){
