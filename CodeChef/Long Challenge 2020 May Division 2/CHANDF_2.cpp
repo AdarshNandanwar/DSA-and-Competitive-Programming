@@ -3,30 +3,53 @@ using namespace std;
 #define MOD 1000000007
 typedef long long ll;
 
+// void printBinary(unsigned n) 
+// {
+//     if (n > 1) 
+//         printBinary(n/2);
+//     cout << n % 2; 
+// } 
+
 ll n;
 
 void solve(){
-    ll X, Y, L, R;
-    cin>>X>>Y>>L>>R;
 
-    if(X==0 || Y==0){
+    ll x, y, l, r, z, max_ans, temp;
+    cin>>x>>y>>l>>r;
+
+    if(x==0 || y==0){
         cout<<0<<endl;
         return;
     }
-    ll max_z = (R&(X|Y));
-    ll max_F = (X&max_z)*(Y&max_z);
-    for(ll i = log2(R); i>=1; i--){
-        if(R & ((ll)1<<i)){
-            ll curr_z = (R & (~((ll)1<<i)) | (((ll)1<<i)-1));
-            curr_z &= (X|Y);
-            ll curr_F = (X&curr_z)*(Y&curr_z);
-            if(curr_F >= max_F){
-                max_F = curr_F;
-                max_z = curr_z;
+
+    z = (r & (x|y));
+    if(l<=z) max_ans = (x&z)*(y&z);
+    for (ll i = log2(r); i >= 1; i--){
+        if(r & ((ll)1<<i)){
+            temp = r & (~((ll)1<<i)) | (((ll)1<<i)-1);
+            temp &= (x|y);
+            ll temp_ans = (x&temp)*(y&temp);
+            if(temp_ans >= max_ans && temp >= l){
+                z = temp;
+                max_ans = temp_ans;
             }
         }
     }
-    cout<<max_z<<endl;
+
+    z = (l | (x|y));
+    if(z<=r) max_ans = (x&z)*(y&z);
+    for (ll i = log2(r); i >= 1; i--){
+        if(!(l & ((ll)1<<i))){
+            temp = l | ((ll)1<<i) & (~(((ll)1<<i)-1));
+            temp |= ((((ll)1<<i)-1) & (x|y));
+            ll temp_ans = (x&temp)*(y&temp);
+            if(temp_ans >= max_ans && temp <= r){
+                z = temp;
+                max_ans = temp_ans;
+            }
+        }
+    }
+    cout<<z<<endl;
 }
  
 int main(){
