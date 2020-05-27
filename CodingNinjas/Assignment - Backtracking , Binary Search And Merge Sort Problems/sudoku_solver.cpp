@@ -1,3 +1,5 @@
+// for more efficient code see leetcode 37
+
 #include<bits/stdc++.h>
 using namespace std;
 
