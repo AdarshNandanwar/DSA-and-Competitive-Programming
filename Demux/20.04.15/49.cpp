@@ -1,5 +1,24 @@
 // https://leetcode.com/problems/group-anagrams/
 
+// Method 2 (Use Count sort to sort string in O(k))
+
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        vector<vector<string>> ans;
+        unordered_map<string, vector<string>> m;
+        for(auto st:strs){
+            string key = st;
+            sort(key.begin(), key.end());
+            m[key].push_back(st);
+        }
+        for(auto item:m){
+            ans.push_back(item.second);
+        }
+        return ans;
+    }
+};
+
 // Method 1
 
 class Solution {
@@ -24,5 +43,3 @@ public:
         return ans;
     }
 };
-
-// Method 2 (Use Count sort to sort strign in O(k))

@@ -71,7 +71,42 @@ public:
     }
 };
 
-//  Method 2 (O(n2)):
+
+// Method 2 (DP, O(n2)):
+
+class Solution {
+public:
+    
+    string longestPalindrome(string s) {
+        int n = s.length(), maxLen = 1, maxIndex = 0;
+        vector<vector<int>> dp(n+1, vector<int>(n+1, 0));
+        
+        // base case
+        for(int i =0; i<n; i++){
+            dp[i][i] = 1;
+            if(i+1<n and s[i] == s[i+1]){
+                dp[i][i+1] = 2;
+            }
+        }
+        
+        
+        for(int i=n-2; i>=0; i--){
+            for(int j = i+1; j<n; j++){
+                if(s[i] == s[j] and dp[i+1][j-1]){
+                    dp[i][j] = 2+dp[i+1][j-1];
+                }
+                if(maxLen < dp[i][j]){
+                    maxLen = dp[i][j];
+                    maxIndex = i;
+                }
+            }
+        }
+        
+        return s.substr(maxIndex, maxLen);
+    }
+};
+
+//  Method 3 (Expanding midpoint method, O(n2)):
 
 class Solution {
 public:
