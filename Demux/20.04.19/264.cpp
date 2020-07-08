@@ -1,5 +1,29 @@
 // https://leetcode.com/problems/ugly-number-ii/
 
+// Method 0 (DP, O(n)):
+
+class Solution {
+public:
+    int nthUglyNumber(int n) {
+        vector<int> v(1,1);
+        int p2, p3, p5, next;
+        p2 = p3 = p5 = 0;
+        // keep 3 pointers to point to next number being multiplied from the previously generated ugly numbers list
+        while(v.size() < n){
+            if(2*v[p2] <= min(3*v[p3], 5*v[p5])) 
+                next = 2*v[p2++];
+            else if(3*v[p3] <= min(2*v[p2], 5*v[p5])) 
+                next = 3*v[p3++];
+            else 
+                next = 5*v[p5++];
+            if(next > v.back()) v.push_back(next);
+        }
+        return v.back();
+    }
+};
+
+// O(nlogn) or O(n2):
+
 // Method 1 (generation only unique elements):
 
 class Solution {
