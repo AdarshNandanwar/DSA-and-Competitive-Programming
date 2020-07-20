@@ -1,5 +1,38 @@
 // https://leetcode.com/problems/wiggle-sort-ii/
 
+// Method 1 (Clean, O(n)):
+
+class Solution {
+public:
+       
+    int mapping(int n, int i){
+        int m = (n+1)/2;
+        return i<m ? 2*(m-i-1) : 1+2*(n-i-1);
+    }
+    
+    void wiggleSort(vector<int>& nums) {
+        int n = nums.size();
+        if(n <= 1) return;
+        int m = (n+1)/2;
+        nth_element(nums.begin(), nums.begin()+m, nums.end());
+        int pivot = nums[m];
+        
+        // Quick Sort Modification
+        
+        int i = 0, j = 0, k = n-1;
+        // keeping the m together in the middle
+        while(j<=k){
+            if(nums[mapping(n, j)] < pivot){
+                swap(nums[mapping(n, i++)], nums[mapping(n, j++)]);
+            } else if(nums[mapping(n, j)] > pivot){
+                swap(nums[mapping(n, k--)], nums[mapping(n, j)]);
+            } else {
+                j++;
+            }
+        }
+    }
+};
+
 // Method 1 (O(n)):
 
 class Solution {
@@ -8,7 +41,7 @@ public:
     int mapping(int n, int i){
         
         // Putting medians in the opposite ends
-        // Reversing to avoid [4,5,5,6] case
+        // Reversing to ensure we always start with lower vector
         
         // odd          --->         8 7 6 5        --->
         // 012345678    --->        4 3 2 1 0       --->    483726150
