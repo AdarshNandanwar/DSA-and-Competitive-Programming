@@ -1,5 +1,34 @@
 // https://leetcode.com/problems/numbers-at-most-n-given-digit-set/
 
+// Method 1 (Digit DP, Bottom Up):
+
+class Solution {
+public:
+    
+    int atMostNGivenDigitSet(vector<string>& D, int N) {
+        
+        string s = to_string(N);
+        int n = D.size(), l = s.length();
+        
+        // dp[i][0]: no. of ways of [0..i] if [0..i] is less than s[0..i]
+        // dp[i][1]: no. of ways of [0..i] if [0..i] is equal to s[0..i]
+        vector<vector<int>> dp(l, vector<int>(2));
+        
+        // base case
+        dp[0][0] = lower_bound(D.begin(), D.end(), string(1, s[0]))-D.begin();
+        dp[0][1] = binary_search(D.begin(), D.end(), string(1, s[0]));
+        
+        for(int i = 1; i<l; i++){
+            int lb = lower_bound(D.begin(), D.end(), string(1, s[i]))-D.begin();
+            // +n for the case when [0..i-1] is all 0
+            dp[i][0] = n + dp[i-1][0]*n + dp[i-1][1]*lb;
+            dp[i][1] = dp[i-1][1]*binary_search(D.begin(), D.end(), string(1, s[i]));
+        }
+        
+        return dp[l-1][0]+dp[l-1][1];
+    }
+};
+
 // Method 1 (Digit DP, Top Down):
 
 class Solution {

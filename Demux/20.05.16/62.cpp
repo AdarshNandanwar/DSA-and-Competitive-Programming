@@ -1,5 +1,23 @@
 // https://leetcode.com/problems/unique-paths/
 
+// Method 1 (Math):
+
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        if(n == 0 or m == 0) return 0;
+        if(n == 1 or m == 1) return 1;
+        n--; m--;
+        // (n+m)! / (n! * m!)
+        long long res = 1;
+        for(int i = n+m; i>max(n, m); i--) res *= i;
+        for(int i = min(n, m); i>=1; i--) res /= i;
+        return res;
+    }
+};
+
+// Method 2 (DP):
+
 class Solution {
 public:
     int uniquePaths(int m, int n) {

@@ -1,53 +1,36 @@
+// https://leetcode.com/problems/circular-array-loop/
+
 #include <bits/stdc++.h>
 using namespace std;
 #define MOD 1000000007
 typedef long long ll;
 
+// Method 1 (Slow Fast Pointer, Clean Code, O(n)):
 
-bool circularArrayLoop(vector<int>& nums) {
-    int slow, fast;
-    int n = nums.size();
-    if(!n){
+class Solution {
+public:
+    bool circularArrayLoop(vector<int>& nums) {
+        // slow fast pointer method
+        int slow, fast, n = nums.size(), dir;
+        for(int i = 0; i<n; i++){
+            if(abs(nums[i]) == n) continue;
+            slow = fast = i;
+            dir = i>0;
+            while(1){
+                if(nums[slow]>0 != dir or nums[fast]>0 != dir or abs(nums[slow]) == n or abs(nums[fast]) == n) break;
+                slow = (slow+nums[slow])%n;
+                if(slow<0) slow+=n;
+                fast = (fast+nums[fast])%n;
+                if(fast<0) fast+=n;
+                if(nums[fast]>0 != dir or abs(nums[fast]) == n) break;
+                fast = (fast+nums[fast])%n;
+                if(fast<0) fast+=n;
+                if(slow == fast) return true;
+            }
+        }
         return false;
     }
-    bool * visited = new bool[n]();
-    for(int i = 0; i < n; i++){
-        if(visited[i])
-            continue;
-        int slow = i, fast = i;
-        if(nums[i] > 0){
-            do{
-                int old_slow = slow;
-                slow = ((slow+nums[slow])%n);
-                fast = ((fast+nums[fast])%n);
-                fast = ((fast+nums[fast])%n);
-                visited[slow] = true;
-                visited[fast] = true;
-                if(nums[slow] <= 0 || nums[fast] <= 0 || slow == old_slow){
-                    return false;
-                }
-            }while(slow != fast);
-            return true;
-        } else if(nums[i] < 0){
-            do{
-                int old_slow = slow;
-                slow = ((slow+nums[slow]+n)%n);     //Imp to do +n, else out of bounds
-                fast = ((fast+nums[fast]+n)%n);     //Imp to do +n, else out of bounds
-                fast = ((fast+nums[fast]+n)%n);     //Imp to do +n, else out of bounds
-                visited[slow] = true;
-                visited[fast] = true;
-                if(nums[slow] >= 0 || nums[fast] >= 0 || slow == old_slow){
-                    return false;
-                }
-            }while(slow != fast);
-            return true;
-        } else {
-            return false;
-        }
-    }
-    delete [] visited;
-    return true;
-}
+};
 
 int main(){
 

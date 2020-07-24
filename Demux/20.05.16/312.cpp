@@ -5,10 +5,13 @@ public:
     int maxCoins(vector<int>& nums) {
         int n = nums.size(), prev, next, temp;
         if(n == 0) return 0;
-
-        // dp[i][j]: we select a k in [i..j] indicating nums[k] gets popped the last in the subarray [i..j]
         vector<vector<int>> dp(n, vector<int>(n, 0));
-        // dp[i][j] =  k:i->j max( dp[i][k-1] + nums[k]*nums[i-1]*nums[j+1] + dp[k+1][j] )
+        
+        // in [i..j], we burst index-k in the last
+        // so, we first solve the subproblems [i..k-1] and [k+1..j]
+        // in which it is ensured that the kth balloon is not bursted
+        
+        // dp[i][j] =  k:i->j max(dp[i][k-1] + nums[k]*prev*next + dp[k+1][j])
         
         for(int i = n-1; i>=0; i--){
             for(int j = 0; j<n; j++){

@@ -1,7 +1,37 @@
+// https://leetcode.com/problems/trapping-rain-water/
+
 #include <bits/stdc++.h>
 using namespace std;
 #define MOD 1000000007
 typedef long long ll;
+
+// Method 1 (Stack, Clean Code, O(n)):
+
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int n = height.size(), base, water = 0, h;
+        
+        // Next Greater Logic
+        
+        stack<int> st;
+        for(int i = 0; i<n; i++){
+            while(!st.empty() and height[st.top()] < height[i]){
+                // base is the height of the lower edge of the water rectange
+                base = height[st.top()];
+                st.pop();
+                if(!st.empty()){
+                    h = min(height[st.top()], height[i])-base;
+                    water += ((i-st.top()-1)*h);
+                }
+            }
+            st.push(i);
+        }
+        return water;
+    }
+};
+
+// Method 1 (Unclean Code, O(n)):
 
 int trap(vector<int>& height) {
     int p1 = 0, p2 = 1;
