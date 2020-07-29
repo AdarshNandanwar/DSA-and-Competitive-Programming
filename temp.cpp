@@ -49,10 +49,10 @@ int main(){
 
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-
-    ll t=1;
-    while(t--){
-        solve();
-    }
+cout<<(-4)%5<<endl;
+    // ll t=1;
+    // while(t--){
+    //     solve();
+    // }
     return 0;
 }
