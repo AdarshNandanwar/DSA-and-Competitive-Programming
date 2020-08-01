@@ -22,6 +22,7 @@
         "bitset": "cpp",
         "initializer_list": "cpp",
         "utility": "cpp",
-        "complex": "cpp"
+        "complex": "cpp",
+        "ratio": "cpp"
     }
 }
