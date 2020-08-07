@@ -61,6 +61,58 @@ public:
     }
 };
 
+// Method 1 (Two pointer, Alternate Code):
+
+class Solution {
+public:
+    void helper(string & s, const vector<string> & words, int start, vector<int> & ans, unordered_map<string, int> & freq){
+        int n = s.length(), len = words[0].length(), remaining = words.size();
+        // [p1, p2)
+        int p1 = start, p2 = start;
+        while(p2+len-1<n){
+            while(p2+len-1<n and !freq.count(s.substr(p2, len))){
+                while(p1<p2){
+                    if(freq.count(s.substr(p1, len))) freq[s.substr(p1, len)]--;
+                    remaining++;
+                    p1 += len;
+                }
+                p1 = p2 = p2+len;
+            } 
+            while(p1<p2 and p2+len-1<n and freq[s.substr(p2, len)] == 0){
+                freq[s.substr(p1, len)]--;
+                remaining++;
+                p1 += len;
+            }
+            if(p2+len-1<n){
+                freq[s.substr(p2, len)]++;
+                remaining--;
+                p2 += len;
+                if(remaining == 0){
+                    ans.push_back(p1);
+                }
+            }
+        }
+        while(p1<p2){
+            if(freq.count(s.substr(p1, len))) freq[s.substr(p1, len)]--;
+            p1 += len;
+        }
+    }
+    
+    vector<int> findSubstring(string s, vector<string>& words) {
+        int n = s.length(), m = words.size();
+        vector<int> ans;
+        if(m == 0) return ans;
+        int len = words[0].length();
+
+        unordered_map<string, int> freq;
+        for(auto s:words) freq[s]--;
+
+        for(int i = 0; i<len; i++) helper(s, words, i, ans, freq);
+
+        return ans;
+    }
+};
+
 // Method 2 (172/173 passed):
 // This method works also when the words are of different lengths
 

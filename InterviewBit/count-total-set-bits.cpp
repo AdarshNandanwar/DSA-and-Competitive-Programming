@@ -6,7 +6,7 @@
 
 void helper(int & n, int index, int & setBitsInLeft, int & res){
     if(index < 0) {
-        // number of bits in A
+        // number of set bits in the number A
         res = (res + setBitsInLeft)%MOD;
         return;
     }
