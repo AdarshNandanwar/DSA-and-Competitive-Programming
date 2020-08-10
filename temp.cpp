@@ -49,7 +49,8 @@ int main(){
 
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-cout<<(-4)%5<<endl;
+cout<<INT_MIN-1<<endl;
+cout<<INT_MAX+1<<endl;
     // ll t=1;
     // while(t--){
     //     solve();

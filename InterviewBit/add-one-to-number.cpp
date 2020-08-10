@@ -2,6 +2,7 @@
 
 vector<int> Solution::plusOne(vector<int> &A) {
     vector<int> res;
+    // removing leading zeros
     for(auto itr = A.begin(); itr!=A.end(); itr++){
         if(*itr >= 1){
             res = vector<int>(itr, A.end());
@@ -18,6 +19,7 @@ vector<int> Solution::plusOne(vector<int> &A) {
     }
     if(i == -1){
         if(res.size()){
+            // all 9s
             res[0] = 1;
             res.push_back(0);
         } else {
