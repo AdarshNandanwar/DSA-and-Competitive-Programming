@@ -4,6 +4,37 @@
 
 class Solution {
 public:
+    
+    int dfs(vector<vector<int>> & adjList, int cur, int parent, int level, vector<int> & minLevel, vector<vector<int>> & ans){
+        if(minLevel[cur] != -1) return minLevel[cur];
+        minLevel[cur] = level;
+        for(auto nbr:adjList[cur]){
+            if(nbr == parent) continue;
+            int d = dfs(adjList, nbr, cur, level+1, minLevel, ans);
+            if(d > level) ans.push_back({cur, nbr});
+            minLevel[cur] = min(minLevel[cur], d);
+        }
+        return minLevel[cur];
+    }
+    
+    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
+        vector<vector<int>> adjList(n);
+        for(auto i:connections){
+            adjList[i[0]].push_back(i[1]);
+            adjList[i[1]].push_back(i[0]);
+        }
+        vector<vector<int>> ans;
+        vector<int> minLevel(n, -1);   // also acts as visited
+        
+        dfs(adjList, 0, -1, 0, minLevel, ans);
+        return ans;
+    }
+};
+
+// Method 1 (DFS, extra level vector, Modified Tarjan's Algo, O(E+V)):
+
+class Solution {
+public:
     void dfs(vector<vector<int>> & adjList, int cur, int curLevel, vector<int> & level, vector<int> & low, int parent, vector<vector<int>> & ans){
         
         level[cur] = low[cur] = curLevel;     // visited is also set here
