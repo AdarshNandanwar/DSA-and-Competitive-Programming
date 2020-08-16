@@ -1,5 +1,3 @@
-// https://www.hackerearth.com/practice/algorithms/graphs/articulation-points-and-bridges/practice-problems/algorithm/articulation-points-and-bridges/
-
 /*
 // Sample code to perform I/O:
 
@@ -22,18 +20,18 @@ int main() {
 using namespace std;
 typedef long long int ll;
 
-void findArticulationPoints(vector<vector<int>> adjList, int cur, int curLevel, vector<int> & level, vector<int> & low, int parent, vector<int> & articulationPoints){
+void findArticulationPoints(vector<vector<int>> adjList, int cur, int curLevel, vector<int> & low, int parent, vector<int> & articulationPoints){
 
 	int independentChildren = 0;
-	level[cur] = low[cur] = curLevel;	// level acts as visited
+	low[cur] = curLevel;	// level acts as visited
 	bool mayBeAtriculationPoint = 0;
 
 	for(auto nbr:adjList[cur]){
 		if(nbr == parent) continue;
-		if(level[nbr] == INT_MAX){		// not visited
+		if(low[nbr] == INT_MAX){		// not visited
 			independentChildren++;
-			findArticulationPoints(adjList, nbr, curLevel+1, level, low, cur, articulationPoints);
-			if(level[cur] <= low[nbr]){
+			findArticulationPoints(adjList, nbr, curLevel+1, low, cur, articulationPoints);
+			if(curLevel <= low[nbr]){
 				mayBeAtriculationPoint = 1;
 			}
 		}
@@ -49,14 +47,14 @@ void findArticulationPoints(vector<vector<int>> adjList, int cur, int curLevel, 
 	}
 }
 
-void findBridges(vector<vector<int>> & adjList, int cur, int curLevel, vector<int> & level, vector<int> & low, int parent, vector<vector<int>> & bridges){
+void findBridges(vector<vector<int>> & adjList, int cur, int curLevel, vector<int> & low, int parent, vector<vector<int>> & bridges){
     
-    level[cur] = low[cur] = curLevel;     // visited is also set here
+    low[cur] = curLevel;     // visited is also set here
     for(auto nbr:adjList[cur]){
         if(parent == nbr) continue;
-        if(level[nbr] == INT_MAX){       // not visited
-            findBridges(adjList, nbr, curLevel+1, level, low, cur, bridges);
-            if(level[cur] < low[nbr]){  // bridge found
+        if(low[nbr] == INT_MAX){       // not visited
+            findBridges(adjList, nbr, curLevel+1, low, cur, bridges);
+            if(curLevel < low[nbr]){  // bridge found
                 bridges.push_back({cur, nbr});
             }
         } 
@@ -75,15 +73,13 @@ int main(){
 		adjList[dest].push_back(src);
 	}
 	
-	vector<int> articulationPoints, level, low;
-    level = vector<int>(n, INT_MAX); 
+	vector<int> articulationPoints, low;
     low = vector<int>(n, INT_MAX);
-	findArticulationPoints(adjList, 0, 0, level, low, -1, articulationPoints);
+	findArticulationPoints(adjList, 0, 0, low, -1, articulationPoints);
 
     vector<vector<int>> bridges; 
-    level = vector<int>(n, INT_MAX); 
     low = vector<int>(n, INT_MAX);
-    findBridges(adjList, 0, 0, level, low, -1, bridges);
+    findBridges(adjList, 0, 0, low, -1, bridges);
 
     sort(articulationPoints.begin(), articulationPoints.end());
     for(auto & i:bridges) if(i[0] > i[1]) swap(i[0], i[1]);

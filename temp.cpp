@@ -49,11 +49,14 @@ int main(){
 
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-cout<<INT_MIN-1<<endl;
-cout<<INT_MAX+1<<endl;
-    // ll t=1;
-    // while(t--){
-    //     solve();
-    // }
+    cout<<__gcd(0, 6)<<endl;
+    cout<<__gcd(-4, 6)<<endl;
+    cout<<__gcd(4, -6)<<endl;
+    cout<<__gcd(-4, -6)<<endl;
+    cout<<__gcd(6, 4)<<endl;
+    cout<<__gcd(6, 4)<<endl;
+    cout<<__gcd(-6, 4)<<endl;
+    cout<<__gcd(6, -4)<<endl;
+    cout<<__gcd(-6, -4)<<endl;
     return 0;
 }

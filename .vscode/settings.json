@@ -23,6 +23,7 @@
         "initializer_list": "cpp",
         "utility": "cpp",
         "complex": "cpp",
-        "ratio": "cpp"
+        "ratio": "cpp",
+        "numeric": "cpp"
     }
 }

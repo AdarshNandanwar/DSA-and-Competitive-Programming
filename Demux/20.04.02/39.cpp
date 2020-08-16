@@ -4,6 +4,35 @@
 
 class Solution {
 public:
+    
+    void helper(vector<int>& candidates, int target, int index, vector<int> & cur, vector<vector<int>> & ans){
+        if(target == 0) {
+            ans.push_back(cur);
+            return;
+        }
+        if(target<0 or index == candidates.size()) return;
+        
+        // ignore
+        helper(candidates, target, index+1, cur, ans);
+        // take
+        cur.push_back(candidates[index]);
+        helper(candidates, target-candidates[index], index, cur, ans);
+        cur.pop_back();
+    }
+    
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        int n = candidates.size();
+        vector<vector<int>> ans;
+        vector<int> cur;
+        helper(candidates, target, 0, cur, ans);
+        return ans;
+    }
+};
+
+// Method 2
+
+class Solution {
+public:
     void helper(vector<int> candidates, int target, int index, vector<vector<int>> & ans, vector<int> curr){
         if(target == 0){
             ans.push_back(curr);
@@ -28,7 +57,7 @@ public:
     }
 };
 
-// Method 2
+// Method 3
 
 class Solution {
 public:

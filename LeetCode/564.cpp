@@ -1,5 +1,52 @@
 // https://leetcode.com/problems/find-the-closest-palindrome/
 
+// Method 1 (stoll conversion, O(n)):
+
+class Solution {
+public:    
+    string prevLargest(string A) {
+        if(A == "1") return "0";
+        int n = A.size();
+        string firstHalf = A.substr(0, (n+1)/2), secondHalf = A.substr(0, n/2);
+        reverse(secondHalf.begin(), secondHalf.end());
+        if(firstHalf+secondHalf < A) return firstHalf+secondHalf;
+        string newFirstHalf = to_string(stoll(firstHalf)-1);
+        if(newFirstHalf != "0" and firstHalf.length() == newFirstHalf.length()){
+            string newSecondHalf = n%2 ? newFirstHalf.substr(0, n/2) : newFirstHalf;
+            reverse(newSecondHalf.begin(), newSecondHalf.end());
+            return newFirstHalf+newSecondHalf;
+        } else {
+            return string(n-1, '9');
+        }        
+    }  
+    
+    string nextSmallest(string A) {        
+        int n = A.size();
+        string firstHalf = A.substr(0, (n+1)/2), secondHalf = A.substr(0, n/2);
+        reverse(secondHalf.begin(), secondHalf.end());
+        if(firstHalf+secondHalf > A) return firstHalf+secondHalf;
+        string newFirstHalf = to_string(stoll(firstHalf)+1);
+        if(newFirstHalf != "0" and firstHalf.length() == newFirstHalf.length()){
+            string newSecondHalf = n%2 ? newFirstHalf.substr(0, n/2) : newFirstHalf;
+            reverse(newSecondHalf.begin(), newSecondHalf.end());
+            return newFirstHalf+newSecondHalf;
+        } else {
+            return "1"+string(n-1, '0')+"1";
+        } 
+    }
+    
+    string nearestPalindromic(string n) {
+        string prevString = prevLargest(n), nextString = nextSmallest(n);        
+        long long num, prev, next;
+        num = stoll(n);
+        prev = stoll(prevString);
+        next = stoll(nextString);
+        return abs(num-prev) > abs(next-num) ? nextString : prevString;
+    }
+};
+
+// Method 2 (String Traversal, O(n)):
+
 class Solution {
 public:    
     string prevLargest(string A) {

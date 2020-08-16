@@ -20,8 +20,6 @@ int Solution::isMatch(const string A, const string B) {
                     // take B[j] zero times
                     dp[i][j] = dp[i][j] or dp[i][j+2];
                     // take B[j] one time
-                    if(i+1 <= na) dp[i][j] = dp[i][j] or dp[i+1][j+2];
-                    // take B[j] more than one time. i.e. use B[j] again for [i+1..na-1]
                     if(i+1 <= na) dp[i][j] = dp[i][j] or dp[i+1][j];
                 }
             } else {
