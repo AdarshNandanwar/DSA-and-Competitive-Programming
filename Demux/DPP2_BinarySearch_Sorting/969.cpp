@@ -21,6 +21,33 @@ public:
 // Method 2 (Slower):
 
 class Solution {
+public:    
+    vector<int> pancakeSort(vector<int>& A) {
+        vector<int> ans;
+        int n = A.size(), j;
+        for(int i = 1; i<n; i++){
+            if(A[i-1] <= A[i]) continue;
+            j = lower_bound(A.begin(), A.begin()+i, A[i])-A.begin();
+            if(j>0){
+                reverse(A.begin(), A.begin()+j);
+                ans.push_back(j);
+            }
+            reverse(A.begin(), A.begin()+i);
+            ans.push_back(i);
+            reverse(A.begin(), A.begin()+i+1);
+            ans.push_back(i+1);
+            if(j>0){
+                reverse(A.begin(), A.begin()+j+1);
+                ans.push_back(j+1);
+            }
+        }
+        return ans;
+    }
+};
+
+// Method 3 (Slower):
+
+class Solution {
 public:
     vector<int> pancakeSort(vector<int>& A) {
         int n = A.size();
