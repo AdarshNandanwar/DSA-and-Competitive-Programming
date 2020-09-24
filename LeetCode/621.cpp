@@ -1,5 +1,28 @@
 // https://leetcode.com/problems/task-scheduler/
 
+// Method 0 (Greedy, More Optimized, O(n)):
+
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int cd) {
+        int n = tasks.size(), maxFreq = 0, maxFreqCount = 0;
+        if(n <= 1) return n;
+        
+        vector<int> freq(26, 0);
+        for(auto i:tasks){
+            freq[i-'A']++;
+            if(maxFreq < freq[i-'A']){
+                maxFreq = freq[i-'A'];
+                maxFreqCount = 1;                
+            } else if(maxFreq == freq[i-'A']){
+                maxFreqCount++;      
+            }
+        }
+        
+        return max(n, (cd+1)*(maxFreq-1)+maxFreqCount);
+    }
+};
+
 // Method 1 (Greedy, O(n)):
 
 class Solution {

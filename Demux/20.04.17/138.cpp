@@ -1,5 +1,62 @@
 // https://leetcode.com/problems/copy-list-with-random-pointer/
 
+// Method 0 (O(n) time, O(1) space):
+
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* next;
+    Node* random;
+    
+    Node(int _val) {
+        val = _val;
+        next = NULL;
+        random = NULL;
+    }
+};
+*/
+
+class Solution {
+public:
+    Node* copyRandomList(Node* A) {
+        if(A == NULL) return NULL;
+        Node * cur = A, * temp = NULL;
+        
+        // repeat every node twice
+        while(cur){
+            temp = cur->next;
+            cur->next = new Node(cur->val);
+            cur = cur->next;
+            cur->next = temp;
+            cur = cur->next;
+        }
+        
+        cur = A;
+        // assign random
+        while(cur){
+            if(cur->random){
+                cur->next->random = cur->random->next;
+            }
+            cur = cur->next->next;
+        }
+        
+        // seperate the new list
+        Node head(0);
+        Node * newCur = &head;
+        cur = A;
+        while(cur){
+            newCur->next = cur->next;
+            newCur = newCur->next;
+            cur->next = cur->next->next;
+            cur = cur->next;
+        }
+        
+        return head.next;
+    }
+};
+
 // Method 1 (Hashing, O(n)):
 
 /*

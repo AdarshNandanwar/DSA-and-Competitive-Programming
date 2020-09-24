@@ -1,6 +1,6 @@
 // https://www.interviewbit.com/problems/find-duplicate-in-array/
 
-// Methdo 1 (Floyd's slow fast pointer, O(n) time, O(1) space)):
+// Method 1 (Floyd's slow fast pointer, O(n) time, O(1) space)):
 
 int Solution::repeatedNumber(const vector<int> &A) {
     int n = A.size();

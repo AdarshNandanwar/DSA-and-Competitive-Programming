@@ -25,6 +25,7 @@
         "complex": "cpp",
         "ratio": "cpp",
         "numeric": "cpp",
-        "istream": "cpp"
+        "istream": "cpp",
+        "iomanip": "cpp"
     }
 }

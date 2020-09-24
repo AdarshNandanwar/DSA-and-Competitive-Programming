@@ -50,16 +50,6 @@ int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     
-    // string A = ".aaaa.a..1.";
-    // istringstream issa(A);
-    // string s;
-    // while(getline(issa, s, '.')){
-    //     cout<<s<<endl;
-    // }
-    // cout<<"end: "<<s<<endl;
-    // cout<<1e3<<endl;
-    int a = INT_MIN;
-    // cout<<a<<" "<<a-1<<" "<<-a<<endl;
-    cout<<0b1111<<endl;
+    cout<<LLONG_MAX<<endl;
     return 0;
 }
