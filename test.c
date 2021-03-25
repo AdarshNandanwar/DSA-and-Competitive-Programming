@@ -1,6 +1,10 @@
 #include<stdio.h>
 // #include<stdlib.h>
 
+int a = 345;
+
+// int b = a/5;
+
 int main(){
     // int i = 5;
     // int * pi = &i;
@@ -28,7 +32,10 @@ int main(){
     // printf("%d\n", sizeof(p));
     // printf("%d\n", sizeof(*p));
     // printf("%d\n", sizeof(**p));
+    // int * p = 0x001000;
+    // printf("%p\n", p+5);
 
-    int * p = 0x001000;
-    printf("%p\n", p+5);
+    int b = a/5;
+
+    printf("%d %d\n", a, b);
 }
