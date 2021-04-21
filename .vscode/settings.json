@@ -26,6 +26,8 @@
         "ratio": "cpp",
         "numeric": "cpp",
         "istream": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "ranges": "cpp",
+        "span": "cpp"
     }
 }

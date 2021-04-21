@@ -1,5 +1,37 @@
 // https://leetcode.com/problems/ones-and-zeroes/
 
+// Method 1 (DP, Bottom Up)
+
+class Solution {
+public:
+    
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        
+        // strings frequency
+        vector<vector<int>> freq(strs.size(), vector<int>(2, 0));
+        for(int i = 0; i<strs.size(); i++){
+            for(auto & j:strs[i]) freq[i][j-'0']++;            
+        }
+
+        // DP
+        vector<vector<vector<int>>> dp(strs.size()+1, vector<vector<int>>(m+1, vector<int>(n+1, 0)));
+        for(int i = strs.size()-1; i>=0; i--){
+            for(int j = 0; j<=m; j++){
+                for(int k = 0; k<=n; k++){
+                    dp[i][j][k] = dp[i+1][j][k];
+                    if(j-freq[i][0]>=0 and k-freq[i][1]>=0){
+                        dp[i][j][k] = max(dp[i][j][k], 1+dp[i+1][j-freq[i][0]][k-freq[i][1]]);
+                    }
+                }
+            }
+        }
+        
+        return dp[0][m][n];
+    }
+};
+
+// Method 2 (DP, Top Down)
+
 class Solution {
 public:
     

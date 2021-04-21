@@ -41,7 +41,69 @@ public:
     }
 };
 
-// Method 2 (TLE, O(n2*m2)):
+// Method 1 (Alternate Code):
+
+class Solution {
+public:
+    int targetSum(vector<int> v, int target){
+        // freq[i] = number of prefixes with sum i
+        unordered_map<int, int> freq;
+        freq[0]++;
+        int prefixSum = 0, res = 0;
+        for(int i = 0; i<v.size(); i++){
+            prefixSum += v[i];
+            res += freq[prefixSum-target];
+            freq[prefixSum]++;
+        }
+        return res;
+    }
+    
+    int numSubmatrixSumTarget(vector<vector<int>>& matrix, int target) {
+        int n = matrix.size(), m = matrix[0].size(), ans = 0;
+        for(int i = 0; i<n; i++){
+            vector<int> row(m, 0);
+            for(int k = i; k>=0; k--){
+                for(int j = 0; j<m ;j++) row[j] += matrix[k][j];
+                ans += targetSum(row, target);
+            }
+        }
+        return ans;
+    }
+};
+
+// Method 2 (O(n2*m2)):
+
+class Solution {
+public:
+    
+    int targetSum(vector<int> v, int target){
+        int n = v.size(), res = 0;
+        // prefixSum[i] = sum of first i elements
+        vector<int> prefixSum(n+1, 0);
+        for(int i = 1; i<=n; i++) prefixSum[i] = prefixSum[i-1]+v[i-1];
+        
+        for(int i = 0; i<n; i++){
+            for(int j = 0; j<=i; j++){
+                if(prefixSum[i+1]-prefixSum[j] == target) res++;
+            }
+        }
+        return res;
+    }
+    
+    int numSubmatrixSumTarget(vector<vector<int>>& matrix, int target) {
+        int n = matrix.size(), m = matrix[0].size(), ans = 0;
+        for(int i = 0; i<n; i++){
+            vector<int> row(m, 0);
+            for(int k = i; k>=0; k--){
+                for(int j = 0; j<m ;j++) row[j] += matrix[k][j];
+                ans += targetSum(row, target);
+            }
+        }
+        return ans;
+    }
+};
+
+// Method 3 (TLE, O(n2*m2)):
 
 class Solution {
 public:
