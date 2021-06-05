@@ -24,3 +24,22 @@ public:
         return count;
     }
 };
+
+// Alternate Code
+
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int max_range = 0, cur_range = 0, n = nums.size(), pos = 0, hops = 0;
+        while(cur_range < n-1){
+            if(pos > cur_range){
+                if(max_range == cur_range) return -1;
+                cur_range = max_range;
+                hops++;
+            }
+            max_range = max(max_range, pos+nums[pos]);
+            pos++;
+        }
+        return hops;
+    }
+};

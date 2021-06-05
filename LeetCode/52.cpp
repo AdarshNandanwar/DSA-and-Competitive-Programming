@@ -22,3 +22,43 @@ public:
         return ans;
     }
 };
+
+// Alternate Code
+
+class Solution {
+public:
+    
+    bool is_valid(vector<string> & board, int row, int col){
+        int i, j, n = board.size();
+        
+        i = row;
+        while(i>=0) if(board[i--][col] == 'Q') return false;
+        i = row; j = col;
+        while(i>=0 and j>=0) if(board[i--][j--] == 'Q') return false;
+        i = row; j = col;
+        while(i>=0 and j<n) if(board[i--][j++] == 'Q') return false;
+        
+        return true;
+    }
+    
+    void helper(vector<string> & board, int row, int & ans){
+        if(row == board.size()){
+            ans++;
+            return;
+        }
+        for(int i = 0; i<board.size(); i++){
+            if(is_valid(board, row, i)){
+                board[row][i] = 'Q';
+                helper(board, row+1, ans);
+                board[row][i] = '.';
+            }
+        }
+    }
+    
+    int totalNQueens(int n) {
+        int ans = 0;
+        vector<string> board(n, string(n, '.'));
+        helper(board, 0, ans);
+        return ans;
+    }
+};

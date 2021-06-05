@@ -16,7 +16,7 @@ public:
                 if(A[p1] == '.'){
                     if(e or decimal or (p1==st and p1+1<=end and !isdigit(A[p1+1]))) return 0;
                     decimal = 1;
-                } else if(A[p1] == 'e'){
+                } else if(A[p1] == 'e' or A[p1] == 'E'){
                     if(e or p1 == st or p1 == end or (!isdigit(A[p1+1]) and A[p1+1] != '-' and A[p1+1] != '+') or ((A[p1+1] == '-' or A[p1+1] == '+') and (p1+2>end or !isdigit(A[p1+2])))) return 0;
                     if(A[p1+1] == '-' or A[p1+1] == '+') p1++;
                     e = 1;

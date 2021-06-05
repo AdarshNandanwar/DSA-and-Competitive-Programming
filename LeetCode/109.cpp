@@ -41,3 +41,28 @@ public:
         return root;
     }
 };
+
+// Alternate Code (Dummy Variable):
+
+class Solution {
+public:
+    TreeNode* sortedListToBST(ListNode* head) {
+        if(head == NULL) return NULL;
+        
+        ListNode dummy(0, head);
+        ListNode * slow = &dummy, * fast = &dummy;
+        
+        while(fast->next and fast->next->next){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        
+        TreeNode * root = new TreeNode();
+        root->val = slow->next->val;
+        root->right = sortedListToBST(slow->next->next);
+        slow->next = NULL;
+        root->left = sortedListToBST(dummy.next);
+        
+        return root;
+    }
+};
