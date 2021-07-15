@@ -4,20 +4,17 @@
 
 class Solution {
 public:
-    int triangleNumber(vector<int>& A) {
-        int n = A.size(), i = 0, left, right, res = 0;
-        sort(A.begin(), A.end());
-        // i is the 2nd side
-        for(int i = 1; i<n-1; i++){
-            // left and right are the 1st and 3rd side respectively
-            // since 1st and 2nd sides are minimum, l1+l2>l3 is sufficient
-            left = i-1, right = n-1;
-            while(left>=0 and right>i){
-                if(A[left]+A[i] > A[right]){
-                    res += (right-i);
-                    left--;
+    int triangleNumber(vector<int>& nums) {
+        int res = 0;
+        sort(nums.begin(), nums.end());
+        for(int i = 2; i<nums.size(); i++){
+            int p1 = 0, p2 = i-1;
+            while(p1<p2){
+                if(nums[p1]+nums[p2] > nums[i]){
+                    res += (p2-p1);
+                    p2--;
                 } else {
-                    right--;
+                    p1++;
                 }
             }
         }

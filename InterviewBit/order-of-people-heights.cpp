@@ -12,7 +12,7 @@ vector<int> Solution::order(vector<int> &A, vector<int> &B) {
     vector<pair<int, int>> v;
     for(int i = 0; i<n; i++) v.push_back({A[i], B[i]});
     // idea: the next shortest person's inFront is its position in the remaning spaces vector
-    // e.g. pos of 4 (inFront = 2) in [3,-1,2,1,-1,-1] its inFront'th empty position,
+    // e.g. pos of 4 (inFront = 2) in [-1,3,2,1,-1,-1] its inFront'th empty position,
     //      that is index = 5
     sort(v.begin(), v.end(), [](const pair<int, int> & a, const pair<int, int> & b){
         return a.first < b.first;

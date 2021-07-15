@@ -1,6 +1,42 @@
 // https://leetcode.com/problems/palindrome-linked-list/
 
-// Method 1 (Floyd Slow Fast Pointer):
+// Method 1 (Recursion):
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+
+class Solution {
+public:
+
+    pair<ListNode*, bool> helper(ListNode* head, int len){
+        if(len == 1) return {head->next, 1};
+        if(len == 2) return {head->next->next, head->val == head->next->val};
+
+        auto h = helper(head->next, len-2);
+        return {h.first->next, h.second and (head->val == h.first->val)};
+    }
+    
+    bool isPalindrome(ListNode* head) {
+        if(!head) return 1;
+        int len = 0;
+        auto cur = head;
+        while(cur){
+            len++;
+            cur = cur->next;
+        }
+        return helper(head, len).second;
+    }
+};
+
+// Method 2 (Floyd Slow Fast Pointer):
 
 /**
  * Definition for singly-linked list.
@@ -46,7 +82,7 @@ public:
     }
 };
 
-// Method 2 (Linear):
+// Method 3 (Linear):
 
 /**
  * Definition for singly-linked list.

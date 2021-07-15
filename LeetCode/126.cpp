@@ -1,6 +1,90 @@
 // https://leetcode.com/problems/word-ladder-ii/
 
-// Method (BFS on path):
+// Method 1 (path reconstruction, x100 faster than Method 2, BFS on path):
+
+class Solution {
+public:
+    
+    bool is_nbr(const string & a, const string & b){
+        if(a.length() != b.length()) return 0;
+        int count = 0;
+        for(int i = 0; i<a.length(); i++){
+            if(a[i]!=b[i]) count++;
+            if(count > 1) return 0;
+        }
+        return count == 1;
+    }
+
+    void generate(int x, unordered_map<int, unordered_set<int>> & prev, vector<vector<string>> & ans, vector<string> & cur, vector<string> & sv){
+        if(x == -1){
+            ans.push_back(cur);
+            return;
+        }
+        cur.push_back(sv[x]);
+        for(auto &i:prev[x]){
+            generate(i, prev, ans, cur, sv);
+        }
+        cur.pop_back();
+    }
+    
+    vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> s(wordList.begin(), wordList.end());
+        if(!s.count(endWord)) return {};
+        s.insert(beginWord);
+        wordList.clear();
+        for(auto &i:s) wordList.push_back(i);
+        int n = wordList.size(), st_index = 0, end_index = 0;
+        vector<vector<int>> adj(n, vector<int>(0));
+        vector<bool> visited(n, 0);
+        for(int i = 0; i<n; i++){
+            if(wordList[i] == beginWord) st_index = i;
+            if(wordList[i] == endWord) end_index = i;
+            for(int j = 0; j<n; j++){
+                if(i!=j and is_nbr(wordList[i], wordList[j])){
+                    adj[i].push_back(j);
+                    adj[j].push_back(i);
+                }
+            }
+        }
+        unordered_map<int, unordered_set<int>> prev;
+        vector<vector<string>> ans;
+        queue<int> q;
+        q.push(st_index);
+        visited[st_index] = 1;
+        prev[st_index] = {-1};
+        while(1){
+            bool found = 0;
+            unordered_set<int> to_remove;
+            if(q.empty()) return {};
+            while(!q.empty()){
+                auto cur = q.front();
+                q.pop();
+                if(cur == end_index){
+                    found = 1;
+                    break;
+                } 
+                for(auto &nbr:adj[cur]){
+                    if(!visited[nbr]){
+                        to_remove.insert(nbr);
+                        prev[nbr].insert(cur);
+                    }
+                }
+            }
+            if(found) break;
+            for(auto &d:to_remove){
+                q.push(d);
+                visited[d] = 1;
+            }
+        }
+        // generate ans
+        vector<string> temp = {};
+        generate(end_index, prev, ans, temp, wordList);
+        for(auto &i:ans) reverse(i.begin(), i.end());
+        return ans;
+    }
+};
+
+// Method 2 (BFS on path):
 
 class Solution {
 public:
