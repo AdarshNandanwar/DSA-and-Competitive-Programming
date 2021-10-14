@@ -1,5 +1,7 @@
 // https://leetcode.com/problems/climbing-stairs/
 
+// Method 1 (DP, O(n)):
+
 class Solution {
 public:
     int climbStairs(int n) {
