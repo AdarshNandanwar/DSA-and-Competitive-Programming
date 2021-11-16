@@ -1,6 +1,46 @@
 // https://leetcode.com/problems/sort-characters-by-frequency/
 
-// Method 1 (Hash map, O(nlogn)):
+// Method 1 (Priority Queue, O(n+26logn)=O(n) time and O(128)=O(1) space):
+
+class Solution {
+public:
+    string frequencySort(string s) {
+        unordered_map<char, int> freq;
+        for(auto &c:s) freq[c]++;
+        priority_queue<pair<int, char>, vector<pair<int, char>>> pq;
+        for(auto &i:freq) pq.push({i.second, i.first});
+        string ans;
+        while(!pq.empty()){
+            auto cur = pq.top();
+            pq.pop();
+            ans += string(cur.first, cur.second);
+        }
+        return ans;
+    }
+};
+
+// Method 2 (Bucket Sort, O(n) time and O(n) space):
+
+class Solution {
+public:
+    string frequencySort(string s) {
+        // Bucket Sort
+        int n = s.length();
+        vector<int> freq(128, 0);
+        for(auto &c:s) freq[c]++;
+        unordered_map<int, unordered_set<int>> rev_freq;
+        for(auto &c:s) rev_freq[freq[c]].insert(c);
+        string ans;
+        for(int i=n; i>=0; i--){
+            for(auto &j:rev_freq[i]){
+                ans += string(i, j);
+            }
+        }
+        return ans;
+    }
+};
+
+// Method 3 (Hash map, O(nlogn)):
 
 class Solution {
 public:

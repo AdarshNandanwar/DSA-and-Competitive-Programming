@@ -1,5 +1,22 @@
 // https://leetcode.com/problems/sum-of-left-leaves/
 
+// Method 1:
+
+class Solution {
+public:
+    int helper(TreeNode* root, int prev){
+        if(!root) return 0;
+        if(!root->left and !root->right) return prev == 0 ? root->val : 0;
+        return helper(root->left, 0)+helper(root->right, 1);
+    }
+    
+    int sumOfLeftLeaves(TreeNode* root) {
+        return helper(root, -1);
+    }
+};
+
+// Method 2:
+
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
