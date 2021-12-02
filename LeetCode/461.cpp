@@ -1,5 +1,16 @@
 // https://leetcode.com/problems/hamming-distance/
 
+// Method 1 (Bitset):
+
+class Solution {
+public:
+    int hammingDistance(int x, int y) {
+        return bitset<32>(x^y).count();
+    }
+};
+
+// Method 2 (Manual Counting):
+
 class Solution {
 public:
     int hammingDistance(int x, int y) {
