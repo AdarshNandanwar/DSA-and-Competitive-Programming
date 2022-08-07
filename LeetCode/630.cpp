@@ -6,25 +6,27 @@ class Solution {
 public:
     int scheduleCourse(vector<vector<int>>& courses) {
         sort(courses.begin(), courses.end(), [](const vector<int> & a, const vector<int> & b){
-            return a[1] == b[1] ? a[0] < b[0] : a[1] < b[1];
+            return a[1] < b[1];
         });
-        // pq contains the durations of the classes currently selected
         priority_queue<int, vector<int>> pq;
-        int cur = 0, ans = 0;
-        pq.push(cur);
-        for(auto & i:courses){
-            int top = pq.top();
-            if(cur+i[0] <= i[1]){
-                pq.push(i[0]);
-                cur += i[0];
-                ans++;
-            } else if(top > i[0] and cur-top+i[0] <= i[1]){
-                pq.pop();
-                pq.push(i[0]);
-                cur = cur-top+i[0];
+        int coursesTaken = 0, timeUsed = 0;
+        for(auto &course:courses){
+            int duration = course[0];
+            int lastDay = course[1];
+            if(timeUsed+duration <= lastDay){
+                timeUsed += duration;
+                pq.push(duration);
+                coursesTaken++;
+            } else if(!pq.empty()){
+                int maxDuration = pq.top();
+                if(maxDuration > duration){
+                    pq.pop();
+                    pq.push(duration);
+                    timeUsed += (duration-maxDuration);
+                }
             }
         }
-        return ans;
+        return coursesTaken;
     }
 };
 

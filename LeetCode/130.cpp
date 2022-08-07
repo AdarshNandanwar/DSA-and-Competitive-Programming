@@ -47,6 +47,43 @@ public:
 
 // Method 2 (DFS, O(n*m)):
 
+class Solution {
+public:
+    vector<int> dir = {0,-1,0,1,0};
+    
+    void dfs(vector<vector<char>>& board, int row, int col){
+        int n = board.size(), m = board[0].size();
+        if(!(row>=0 and col>=0 and row<n and col<m)) return;
+        if(board[row][col] != 'O') return;
+        board[row][col] = 'o';
+        for(int i=0; i<4; i++){
+            int nbrRow = row+dir[i];
+            int nbrCol = col+dir[i+1];
+            dfs(board, nbrRow, nbrCol);
+        }
+    }
+    
+    void solve(vector<vector<char>>& board) {
+        int n = board.size(), m = board[0].size();
+        for(int i=0; i<n; i++){
+            dfs(board, i, 0);
+            dfs(board, i, m-1);
+        }
+        for(int j=0; j<m; j++){
+            dfs(board, 0, j);
+            dfs(board, n-1, j);
+        }
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(board[i][j] == 'O') board[i][j] = 'X';
+                if(board[i][j] == 'o') board[i][j] = 'O';
+            }
+        }
+    }
+};
+
+// Alternate Code:
+
 int dir[5] = {0, 1, 0, -1, 0};
 
 class Solution {

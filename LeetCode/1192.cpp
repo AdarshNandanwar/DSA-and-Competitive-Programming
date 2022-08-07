@@ -3,6 +3,40 @@
 // Method 1 (DFS, Modified Tarjan's Algo, O(E+V)):
 
 class Solution {
+    void dfs(int cur, int parent, int level, vector<vector<int>> & nbrs, vector<int> & minLevel, vector<vector<int>> & criticalConnections){
+        minLevel[cur] = min(minLevel[cur], level);
+        for(auto & nbr:nbrs[cur]){
+            if(nbr == parent){
+                continue;
+            }
+            if(minLevel[nbr] == INT_MAX){
+                dfs(nbr, cur, level+1, nbrs, minLevel, criticalConnections);
+            }
+            minLevel[cur] = min(minLevel[cur], minLevel[nbr]);
+            if(minLevel[nbr] > level){
+                criticalConnections.push_back({cur, nbr});
+            }
+        }
+    }
+public:
+    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
+        vector<vector<int>> criticalConnections;
+        vector<int> minLevel(n, INT_MAX);
+        vector<vector<int>> nbrs(n);
+        for(auto & edge:connections){
+            int src = edge[0];
+            int dest = edge[1];
+            nbrs[src].push_back(dest);
+            nbrs[dest].push_back(src);
+        }
+        dfs(0, -1, 0, nbrs, minLevel, criticalConnections);
+        return criticalConnections;
+    }
+};
+
+// Alternate Code:
+
+class Solution {
 public:
     
     int dfs(vector<vector<int>> & adjList, int cur, int parent, int level, vector<int> & minLevel, vector<vector<int>> & ans){

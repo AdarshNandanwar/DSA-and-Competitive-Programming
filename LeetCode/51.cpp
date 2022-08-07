@@ -3,6 +3,45 @@
 // Method 1 (DP check):
 
 class Solution {
+    void getPlacements(const int & n, vector<bool> & columnsUsed, vector<bool> & leftDiagonalsUsed, vector<bool> & rightDiagonalsUsed, vector<vector<string>> & placements, vector<string> & placement){
+        int row = placement.size();
+        if(row == n){
+            placements.push_back(placement);
+            return;
+        }
+        for(int col=0; col<n; col++){
+            int leftDiagonal = row-col+n-1;
+            int rightDiagonal = row+col;
+            if(!columnsUsed[col] and !leftDiagonalsUsed[leftDiagonal] and !rightDiagonalsUsed[rightDiagonal]){
+                columnsUsed[col] = true;
+                leftDiagonalsUsed[leftDiagonal] = true;
+                rightDiagonalsUsed[rightDiagonal] = true;                
+                string boardRow = string(n, '.');
+                boardRow[col] = 'Q';
+                placement.push_back(boardRow);
+                getPlacements(n, columnsUsed, leftDiagonalsUsed, rightDiagonalsUsed, placements, placement);
+                columnsUsed[col] = false;
+                leftDiagonalsUsed[leftDiagonal] = false;
+                rightDiagonalsUsed[rightDiagonal] = false;
+                placement.pop_back();
+            }
+        }
+    }
+public:
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>> placements;
+        vector<string> placement;
+        vector<bool> columnsUsed(n, false);
+        vector<bool> leftDiagonalsUsed(2*n-1, false);
+        vector<bool> rightDiagonalsUsed(2*n-1, false);
+        getPlacements(n, columnsUsed, leftDiagonalsUsed, rightDiagonalsUsed, placements, placement);
+        return placements;
+    }
+};
+
+// Alternate Code:
+
+class Solution {
 public:
     
     void solve(int n, vector<string> & curr, vector<bool> & row, vector<bool> & col, vector<bool> & diag1, vector<bool> & diag2, vector<vector<string>> & ans, int queensLeft, int r){

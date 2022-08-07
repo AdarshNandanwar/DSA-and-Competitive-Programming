@@ -1,5 +1,45 @@
 // https://leetcode.com/problems/n-queens-ii/
 
+// Method 1 (Hash Table):
+
+class Solution {
+    int getPlacements(const int & n, vector<bool> & columnsUsed, vector<bool> & leftDiagonalsUsed, vector<bool> & rightDiagonalsUsed, vector<string> & placement){
+        int row = placement.size();
+        if(row == n){
+            return 1;
+        }
+        int count = 0;
+        for(int col=0; col<n; col++){
+            int leftDiagonal = row-col+n-1;
+            int rightDiagonal = row+col;
+            if(!columnsUsed[col] and !leftDiagonalsUsed[leftDiagonal] and !rightDiagonalsUsed[rightDiagonal]){
+                columnsUsed[col] = true;
+                leftDiagonalsUsed[leftDiagonal] = true;
+                rightDiagonalsUsed[rightDiagonal] = true;                
+                string boardRow = string(n, '.');
+                boardRow[col] = 'Q';
+                placement.push_back(boardRow);
+                count += getPlacements(n, columnsUsed, leftDiagonalsUsed, rightDiagonalsUsed, placement);
+                columnsUsed[col] = false;
+                leftDiagonalsUsed[leftDiagonal] = false;
+                rightDiagonalsUsed[rightDiagonal] = false;
+                placement.pop_back();
+            }
+        }
+        return count;
+    }
+public:
+    int totalNQueens(int n) {
+        vector<string> placement;
+        vector<bool> columnsUsed(n, false);
+        vector<bool> leftDiagonalsUsed(2*n-1, false);
+        vector<bool> rightDiagonalsUsed(2*n-1, false);
+        return getPlacements(n, columnsUsed, leftDiagonalsUsed, rightDiagonalsUsed, placement);
+    }
+};
+
+// Alternate Code:
+
 void helper(int & n, int row, vector<bool> & col, vector<bool> & diag1, vector<bool> & diag2, int & ans){
     if(row == n){
         ans++;
@@ -23,7 +63,7 @@ public:
     }
 };
 
-// Alternate Code
+// Method 2 (Brute Force):
 
 class Solution {
 public:

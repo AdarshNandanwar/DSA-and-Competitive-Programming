@@ -1,6 +1,27 @@
 // https://leetcode.com/problems/flatten-binary-tree-to-linked-list/
 
-// Method 1 (Brute Force):
+// Method 1 (Global Variable):
+
+class Solution {
+public:
+    
+    TreeNode * prev = NULL;
+    
+    void flatten(TreeNode* root) {
+        
+        // traversal: 6, 5, 4, 3, 2, 1, 
+        // We just link cur node to prev node
+
+        if(!root) return;
+        flatten(root->right);
+        flatten(root->left);
+        root->right = prev;
+        root->left = NULL;
+        prev = root;
+    }
+};
+
+// Method 2 (Brute Force):
 
 /**
  * Definition for a binary tree node.
@@ -25,22 +46,5 @@ public:
         cur->right = root->right;
         root->right = root->left;
         root->left = NULL;
-    }
-};
-
-// Method 2 (Global Variable):
-
-class Solution {
-public:
-    
-    TreeNode * prev = NULL;
-    
-    void flatten(TreeNode* root) {
-        if(!root) return;
-        flatten(root->right);
-        flatten(root->left);
-        root->right = prev;
-        root->left = NULL;
-        prev = root;
     }
 };

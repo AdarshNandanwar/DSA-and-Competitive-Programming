@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/longest-consecutive-sequence/
 
-// Method 1 (O(n)):
+// Method 1 (Hash set, O(n)):
 
 class Solution {
 public:    
@@ -36,7 +36,29 @@ public:
     }
 };
 
-// Method 3 (Union Find, O(nlogn)):
+// Method 3 (Ordered Set, O(nlogn)):
+
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        if(nums.size() == 0){
+            return 0;
+        }
+        set<int> sortedNums(nums.begin(), nums.end());
+        int res = 1, curLen = 1;
+        for(auto itr=next(sortedNums.begin()); itr!=sortedNums.end(); itr++){
+            if(*itr == (*prev(itr))+1){
+                curLen++;
+            } else {
+                curLen = 1;
+            }
+            res = max(res, curLen);
+        }
+        return res;
+    }
+};
+
+// Method 4 (Union Find, O(nlogn)):
 
 class Solution {
 public:
@@ -77,7 +99,7 @@ public:
     }
 };
 
-// Method 4 (O(n*n)):
+// Method 5 (O(n*n)):
 
 class Solution {
 public:

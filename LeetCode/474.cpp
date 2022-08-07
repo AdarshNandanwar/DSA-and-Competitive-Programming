@@ -55,3 +55,50 @@ public:
         return helper(strs, 0, m, n, dp);
     }
 };
+
+// Alternate Code:
+
+class Solution {
+    struct Count{
+        int ones;
+        int zeros;
+        Count(){
+            ones = 0;
+            zeros = 0;
+        }
+    };
+    int getMaxSubsetSize(const vector<Count> & v, int l, int m, int n, vector<vector<vector<int>>> & dp){
+        if(m<0 or n<0){
+            return INT_MIN;
+        }
+        if(l<0){
+            return 0;
+        }
+        if(dp[l][m][n] != -1){
+            return dp[l][m][n];
+        }
+        dp[l][m][n] = max(1+getMaxSubsetSize(v, l-1, m-v[l].zeros, n-v[l].ones, dp),
+                          getMaxSubsetSize(v, l-1, m, n, dp));
+        return dp[l][m][n];
+    }
+public:
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        vector<Count> v;
+        int l = strs.size();
+        for(auto & str:strs){
+            Count counter;
+            for(auto c:str){
+                if(c == '0'){
+                    counter.zeros++;
+                } else {
+                    counter.ones++;
+                }
+            }
+            v.push_back(counter);
+        }
+        
+        // dp[i][j][k] = max subset of v[0..i] using max j zeros and k ones
+        vector<vector<vector<int>>> dp(l, vector<vector<int>>(m+1, vector<int>(n+1, -1)));
+        return getMaxSubsetSize(v, l-1, m, n, dp);
+    }
+};

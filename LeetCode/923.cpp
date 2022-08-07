@@ -1,5 +1,58 @@
 // https://leetcode.com/problems/3sum-with-multiplicity/
 
+// Method 1 (3 Pointers, O(n2)):
+
+#define MOD 1000000007
+
+class Solution {
+public:
+    int threeSumMulti(vector<int>& arr, int target) {
+        long ans = 0, n = arr.size(), count, combinations;
+        sort(arr.begin(), arr.end());
+        
+        for(int i=0; i<n; i++){
+            int subTarget = target-arr[i];
+            int left=i+1, right=n-1;
+            
+            while(left<right){
+                if(arr[left]+arr[right] > subTarget){
+                    right--;
+                } else if(arr[left]+arr[right] < subTarget){
+                    left++;
+                } else {
+                    if(arr[left] == arr[right]){
+                        count = right-left+1;
+                        combinations = ((count-1)*(count))/2;
+                        ans = (ans+combinations)%MOD;
+                        break;
+                    } else {
+                        int countLeft = 0, countRight=0, ptr;
+                        ptr = left;
+                        while(arr[ptr] == arr[left]){
+                            ptr++;
+                            countLeft++;
+                        }
+                        ptr = right;
+                        while(arr[ptr] == arr[right]){
+                            ptr--;
+                            countRight++;
+                        }
+                        
+                        combinations = countLeft*countRight;
+                        ans = (ans+combinations)%MOD;
+                        
+                        left += countLeft;
+                        right -= countRight;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+};
+
+// Method 2:
+
 #define MOD 1000000007
 typedef long long ll;
 

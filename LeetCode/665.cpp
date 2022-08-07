@@ -1,6 +1,31 @@
 // https://leetcode.com/problems/non-decreasing-array/
 
-// Method 1 (Greedy, O(n)):
+// Method 1 (O(n)):
+
+class Solution {
+public:
+    bool checkPossibility(vector<int>& nums) {
+        int index = -1, n = nums.size();
+        if(n == 1){
+            return true;
+        }
+        for(int i=0; i<n-1; i++){
+            if(nums[i] > nums[i+1]){
+                if(index != -1){
+                    return false;
+                }
+                index = i;
+            }
+        }
+        if(index <= 0 or index == n-2){
+            return true;
+        } else {
+            return nums[index-1] <= nums[index+1] or nums[index] <= nums[index+2];
+        }
+    }
+};
+
+// Method 2 (Greedy, O(n)):
 
 class Solution {
 public:
@@ -27,7 +52,7 @@ public:
     }
 };
 
-// Method 2 (Greedy, Trial and Error, O(n)):
+// Method 3 (Greedy, Trial and Error, O(n)):
 
 class Solution {
 public:

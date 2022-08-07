@@ -1,6 +1,34 @@
 // https://leetcode.com/problems/number-of-submatrices-that-sum-to-target/
 
-// Method 1 (PrefixSum, DP, O(n*m2)):
+// Method 1 (PrefixSum, O(n2*m)):
+
+class Solution {
+public:
+    int numSubmatrixSumTarget(vector<vector<int>>& matrix, int target) {
+        int n = matrix.size(), m = matrix[0].size();
+        int submatrices = 0;
+        for(int i=0; i<n; i++){
+            vector<int> verticalSum(m, 0);
+            for(int k=i; k>=0; k--){
+                int prefixSum = 0;
+                unordered_map<int, int> prefixSumFreq;
+                prefixSumFreq[0]++;
+                for(int j=0; j<m; j++){
+                    verticalSum[j] += matrix[k][j];
+                    prefixSum += verticalSum[j];
+                    int requiredPrefix = prefixSum-target;
+                    if(prefixSumFreq.count(requiredPrefix)){
+                        submatrices += prefixSumFreq[requiredPrefix];
+                    }
+                    prefixSumFreq[prefixSum]++;
+                }
+            }
+        }
+        return submatrices;
+    }
+};
+
+// Alternate Code (o(n*m2)):
 
 class Solution {
 public:

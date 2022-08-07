@@ -1,5 +1,30 @@
 // https://leetcode.com/problems/valid-palindrome/
 
+// Method 1 (2 Pointer, O(n)):
+
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        string palindrome = "";
+        for(auto &c:s){
+            if(isalnum(c)){
+                palindrome.push_back(tolower(c));
+            }
+        }
+        int lo = 0, hi = palindrome.length()-1;
+        while(lo<hi){
+            if(palindrome[lo] != palindrome[hi]){
+                return false;
+            }
+            lo++;
+            hi--;
+        }
+        return true;
+    }
+};
+
+// Alternate Code:
+
 class Solution {
 public:
     bool isPalindrome(string s) {

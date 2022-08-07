@@ -40,3 +40,41 @@ public:
         return res;
     }
 };
+
+// Method 2 (Sorting, Virtual Indexing, O(nlogn)):
+
+class Solution {
+public:
+    int getIndex(int i, int n){
+        // 0 1 2 3 => 0 2 1 3
+        if(n%2 == 0){
+            if(2*i < n){
+                return 2*i;
+            } else {
+                return 1+(2*i)%n;
+            }
+        } else {
+            return (2*i)%n;
+        }    
+    }
+    
+    string reorganizeString(string s) {
+        unordered_map<char, int> freq;
+        for(auto &c:s){
+            freq[c]++;
+        }
+        sort(s.begin(), s.end(), [&freq](const char & a, const char & b){
+            return freq[a] == freq[b] ? a<b : freq[a] > freq[b];
+        });
+        
+        int n =s.length();
+        string newS = string(s);
+        for(int i=0; i<n; i++){
+            newS[getIndex(i, n)] = s[i];
+        }
+        for(int i=1; i<n; i++){
+            if(newS[i] == newS[i-1]) return "";
+        }
+        return newS;
+    }
+};

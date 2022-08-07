@@ -1,6 +1,45 @@
 // https://leetcode.com/problems/find-and-replace-pattern/
 
-// Method 1 (Set):
+// Method 1 (Vector, Bit Manipulation, O(n*m)):
+
+class Solution {
+public:
+    vector<string> findAndReplacePattern(vector<string>& words, string pattern) {
+        int n = pattern.size();
+        vector<string> response;
+        
+        for(auto & word:words){
+            vector<int> mapping(26, -1);
+            int mapped = 0;
+            bool isMatch = true;            
+            for(int i=0; i<n; i++){
+                int wordLetterId    = word[i]-'a';
+                int patternLetterId = pattern[i]-'a';                
+                if(mapping[wordLetterId] == -1){
+                    if(1&(mapped>>(patternLetterId))){
+                        isMatch = false;
+                        break;
+                    } else {
+                        mapping[wordLetterId] = patternLetterId;
+                        mapped |= (1<<(patternLetterId));
+                    }
+                } else {
+                    if(mapping[wordLetterId] != patternLetterId){
+                        isMatch = false;
+                        break;
+                    }
+                }
+            }
+            if(isMatch){
+                response.push_back(word);
+            }
+        }
+        
+        return response;
+    }
+};
+
+// Method 2 (Set, O(n*m)):
 
 class Solution {
 public:
@@ -32,7 +71,7 @@ public:
     }
 };
 
-// Method 2 (Reverse Map):
+// Method 3 (Reverse Map, O(n*m)):
 
 class Solution {
 public:

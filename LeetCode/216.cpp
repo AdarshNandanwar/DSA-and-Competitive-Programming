@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/combination-sum-iii/
 
-// Method 1 (Backtracking, O(9^k)):
+// Method 1 (Backtracking, O(9*8*7)):
 
 class Solution {
 public:

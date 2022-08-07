@@ -1,6 +1,23 @@
 // https://leetcode.com/problems/maximum-subarray/
 
-// Method 1 (DP, O(n)):
+// Method 1 (Kadane's Algorithm, O(n) time, O(1) space):
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int curSum = -1, maxSum = INT_MIN;
+        for(auto &num:nums){
+            if(curSum < 0){
+                curSum = 0;
+            }
+            curSum += num;
+            maxSum = max(maxSum, curSum);
+        }
+        return maxSum;
+    }
+};
+
+// Method 2 (DP, O(n) time, O(n) space):
 
 class Solution {
 public:
@@ -19,7 +36,7 @@ public:
     }
 };
 
-// Method 2 (O(n)):
+// Method 3 (O(n) time, O(1) space):
 
 class Solution {
 public:

@@ -1,6 +1,39 @@
 // https://leetcode.com/problems/furthest-building-you-can-reach/
 
-// Method 1 (min heap, O(n)):
+// Method 1 (Max Heap, O(nlogn)):
+
+class Solution {
+public:
+    int furthestBuilding(vector<int>& heights, int bricks, int ladders) {
+        priority_queue<int, vector<int>> bricksUsed;
+        int n = heights.size(), i;
+        for(i=0; i<n-1; i++){
+            if(heights[i] >= heights[i+1]){
+                continue;
+            }
+            int diff = heights[i+1] - heights[i];
+            if(diff>bricks and ladders>0 and !bricksUsed.empty() and diff<bricksUsed.top()){
+                // diff<bricksUsed.top() is corner case where it is better to use ladder now
+                // as compared to someplace earlier
+                bricks += bricksUsed.top();
+                bricksUsed.pop();
+                ladders--;
+            }
+            // We pop only when the top() > diff, so no need for while loop above
+            if(diff <= bricks){
+                bricksUsed.push(diff);
+                bricks -= diff;
+            } else if(ladders>0){
+                ladders--;
+            } else {
+                break;
+            }
+        }
+        return i;
+    }
+};
+
+// Method 2 (min heap, O(nlogn)):
 
 class Solution {
 public:
@@ -23,7 +56,7 @@ public:
     }
 };
 
-// Method 2 (Backtracking, will probabily give TLE):
+// Method 3 (Backtracking, will probabily give TLE):
 
 class Solution {
 public:

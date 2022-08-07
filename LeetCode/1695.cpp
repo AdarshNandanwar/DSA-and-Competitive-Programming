@@ -1,6 +1,37 @@
 // https://leetcode.com/problems/maximum-erasure-value/
 
-// Method 1 (2 Pointer, Binary Vector):
+// Method 1 (2 Pointer, Hash Table, O(n)):
+
+class Solution {
+public:
+    int maximumUniqueSubarray(vector<int>& nums) {
+        int n = nums.size();
+        unordered_map<int, int> freq;
+        int left = 0, right = 0, curSum = 0, maxSum = 0;
+        bool distinct = true;
+        // [left, right)
+        while(right<n){
+            freq[nums[right]]++;
+            if(freq[nums[right]] == 2){
+                distinct = false;
+            }
+            curSum += nums[right];
+            right++;
+            while(!distinct){
+                freq[nums[left]]--;
+                if(freq[nums[left]] == 1){
+                    distinct = true;
+                }
+                curSum -= nums[left];
+                left++;
+            }
+            maxSum = max(maxSum, curSum);
+        }
+        return maxSum;
+    }
+};
+
+// Method 1 (2 Pointer, Binary Vector, O(n)):
 
 class Solution {
 public:
@@ -21,7 +52,7 @@ public:
     }
 };
 
-// Method 1 (2 Pointer, Unordered Set):
+// Method 1 (2 Pointer, Unordered Set, O(n)):
 
 class Solution {
 public:

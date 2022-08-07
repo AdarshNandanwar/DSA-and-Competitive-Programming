@@ -22,7 +22,48 @@ public:
     }
 };
 
-// Method 2 (Finding Length, O(n) time, O(1) space):
+// Method 2 (Slow Fast Pointer):
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        auto last = headA;
+        while(last->next){
+            last = last->next;
+        }
+        last->next = headA;
+        auto slow = headB, fast = headB;
+        if(fast->next == NULL){
+            last->next = NULL;
+            return NULL;
+        }
+        do{
+            slow = slow->next;
+            fast = fast->next->next;
+        } while(fast and fast->next and slow != fast);
+        if(slow != fast){
+            last->next = NULL;
+            return NULL;
+        }
+        slow = headB;
+        while(slow != fast){
+            slow = slow->next;
+            fast = fast->next;
+        }
+        last->next = NULL;
+        return slow;
+    }
+};
+
+// Method 3 (Finding Length, O(n) time, O(1) space):
 
 /**
  * Definition for singly-linked list.

@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/multiply-strings/
 
-// Method 1 (Multiply at once, O(n2)):
+// Method 1 (Multiply at once, O(n*m)):
 
 class Solution {
 public:
@@ -25,54 +25,67 @@ public:
     }
 };
 
-// Method 2 (Multiply one by one and add strings, O(n2)):
-
-void addString(string & s1, string & s2){
-    int n1 = s1.length(), n2 = s2.length(), carry = 0, sum = 0;
-    int p1 = n1-1, p2 = n2-1;
-    while(p1>=0 and p2>=0){
-        sum = s1[p1]-'0' + s2[p2]-'0' + carry;
-        carry = sum/10;
-        s1[p1] = (sum%10)+'0';
-        p1--; p2--;
-    }
-    while(p1>=0){
-        sum = s1[p1]-'0' + carry;
-        carry = sum/10;
-        s1[p1] = (sum%10)+'0';
-        p1--;
-    }
-    while(p2>=0){
-        sum = s2[p2]-'0' + carry;
-        carry = sum/10;
-        s1 = to_string(sum%10)+s1;
-        p2--;
-    }
-    if(carry) s1 = to_string(carry) + s1;
-}
+// Method 2 (Multiply one by one and add strings, O(n*m)):
 
 class Solution {
 public:
-    string multiply(string s1, string s2) {
-        if(s1 == "0" or s2 == "0") return "0";
-        int n1 = s1.length(), n2 = s2.length(), carry, p, a, b, k;
-        string prod = "0";
-        for(int i = n2-1; i>=0; i--){
-            string temp = string(n2-1-i, '0');
-            carry = 0;
-            a = s2[i]-'0';
-            for(int j = n1-1; j>=0; j--){
-                b = s1[j]-'0';
-                p = a*b+carry;
-                carry = p/10;
-                temp = to_string(p%10)+temp;
-            }
-            if(carry) temp = to_string(carry)+temp;
-            addString(prod, temp);
+    string addition(string s1, string s2){
+        int n1 = s1.length(), n2 = s2.length();
+        int p1 = n1-1, p2=n2-1;
+        int carry = 0, sum = 0;
+        string res;
+        while(p1>=0 and p2>=0){
+            sum = s1[p1]-'0'+s2[p2]-'0'+carry;
+            carry = sum/10;
+            sum = sum%10;
+            res.push_back(sum+'0');
+            p1--;
+            p2--;
         }
-        for(k = 0; k<prod.length(); k++) if(prod[k] != '0') break;
-        if(k == prod.length()) prod = "0";
-        else if(k != 0) prod = prod.substr(k, prod.length()-k);
-        return prod;
+        while(p1>=0){
+            sum = s1[p1]-'0'+carry;
+            carry = sum/10;
+            sum = sum%10;
+            res.push_back(sum+'0');
+            p1--;
+        }
+        while(p2>=0){
+            sum = s2[p2]-'0'+carry;
+            carry = sum/10;
+            sum = sum%10;
+            res.push_back(sum+'0');
+            p2--;
+        }
+        if(carry){
+            res.push_back(carry+'0');
+        }
+        return string(res.rbegin(), res.rend());
+    }
+    
+    string multiply(string num1, string num2) {
+        if(num1=="0" or num2=="0") return "0";
+        int n1= num1.size(), n2 = num2.size();
+        string ans = string(n1+n2, '0');
+        for(int i=n2-1; i>=0; i--){
+            int zeros = n2-1-i;
+            int sum = 0, carry = 0;
+            string toAdd(n1+1+zeros, '0');
+            for(int j=n1-1; j>=0; j--){
+                int prod = (num2[i]-'0')*(num1[j]-'0');
+                sum = prod+carry;
+                carry = sum/10;
+                toAdd[j+1] = (sum%10)+'0';
+            }
+            toAdd[0] = carry+'0';
+            ans = addition(ans, toAdd);
+        }
+        int start=0;
+        while(start<n1+n2){
+            if(ans[start] != '0'){
+                break;
+            }
+            start++;
+        }
+        return ans.substr(start);
     }
 };

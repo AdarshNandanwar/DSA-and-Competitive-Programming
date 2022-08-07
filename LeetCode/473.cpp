@@ -1,6 +1,40 @@
 // https://leetcode.com/problems/matchsticks-to-square/
 
-// Method 1 (Optimization, Pruning):
+// Method 1 (Recursion, O(4^n)):
+
+class Solution {
+    bool helper(const vector<int> & matchsticks, vector<int> & sides, const int & sideLength, int index){
+        if(index == matchsticks.size()){
+            return true;
+        }
+        int curStick = matchsticks[index];
+        bool res = false;
+        for(int i=0; i<4; i++){
+            if(sides[i]+curStick <= sideLength){
+                sides[i] += curStick;
+                res = helper(matchsticks, sides, sideLength, index+1);
+                if(res){
+                    break;
+                }
+                sides[i] -= curStick;
+            }
+        }
+        return res;
+    }
+public:
+    bool makesquare(vector<int>& matchsticks) {
+        int n = matchsticks.size(), sum = accumulate(matchsticks.begin(), matchsticks.end(), 0);
+        if(sum%4){
+            return false;
+        }
+        int sideLength = sum/4;
+        sort(matchsticks.begin(), matchsticks.end(), greater<int>());
+        vector<int> sides(4, 0);
+        return helper(matchsticks, sides, sideLength, 0);
+    }
+};
+
+// Method 2 (Optimization, Pruning):
 
 class Solution {
 public:
@@ -40,7 +74,52 @@ public:
     }
 };
 
-// Method 2 (Brute Force, TLE):
+// Method 3 (Brute Force, TLE):
+
+class Solution {
+    struct Cmp{
+        bool operator()(const int & a, const int & b) const {
+            return a > b;
+        }
+    };
+    bool helper(multiset<int, Cmp> & sticks, const int & sideLength, int curSideLength){
+        if(sticks.empty()){
+            return true;
+        }
+        vector<int> sticksVector(sticks.begin(), sticks.end());
+        for(auto & stick:sticksVector){
+            int newSideLength = curSideLength+stick;
+            if(newSideLength > sideLength){
+                continue;
+            }
+            auto itr = sticks.lower_bound(stick);
+            sticks.erase(itr);
+            if(newSideLength == sideLength){
+                if(helper(sticks, sideLength, 0)){
+                    return true;
+                }                
+            } else {
+                if(helper(sticks, sideLength, newSideLength)){
+                    return true;
+                }                
+            }
+            sticks.insert(stick);
+        }
+        return false;
+    }
+public:
+    bool makesquare(vector<int>& matchsticks) {
+        int n = matchsticks.size(), sum = accumulate(matchsticks.begin(), matchsticks.end(), 0);
+        if(sum%4){
+            return false;
+        }
+        int sideLength = sum/4;
+        multiset<int, Cmp> sticks(matchsticks.begin(), matchsticks.end());
+        return helper(sticks, sideLength, 0);
+    }
+};
+
+// Method 4 (Brute Force, TLE):
 
 class Solution {
 public:

@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/word-subsets/
 
-// Method 1 (vectors)
+// Method 1 (Vectors, O(n+m))
 
 class Solution {
 public:
@@ -36,7 +36,7 @@ public:
     }
 };
 
-// Method 2 (Hash Maps)
+// Method 2 (Hash Maps, O(n+m))
 
 class Solution {
 public:

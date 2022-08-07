@@ -17,3 +17,30 @@ public:
         return res;
     }
 };
+
+// Alternate Code:
+
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        int n = matrix.size(), m = matrix[0].size();
+        vector<int> ans;
+        int dist = 0;
+        while(dist <= (min(n, m)-1)/2){
+            for(int j=dist; j<m-dist; j++){
+                ans.push_back(matrix[dist][j]);
+            }
+            for(int i=dist+1; i<n-dist; i++){
+                ans.push_back(matrix[i][m-dist-1]);
+            }
+            for(int j=m-dist-2; dist!=n-1-dist and j>=dist; j--){
+                ans.push_back(matrix[n-1-dist][j]);
+            }
+            for(int i=n-dist-2; dist!=m-1-dist and i>dist; i--){
+                ans.push_back(matrix[i][dist]);
+            }
+            dist++;
+        }
+        return ans;
+    }
+};

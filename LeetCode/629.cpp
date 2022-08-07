@@ -1,6 +1,35 @@
 // https://leetcode.com/problems/k-inverse-pairs-array/
 
-// Method 1 *Bottom Up DP, Time Optimised, O(n*k)):
+// Method 1 (Bottom Up 2D DP, Time Optimized, O(n*k)):
+
+#define MOD 1000000007
+class Solution {
+public:
+    int kInversePairs(int n, int k) {
+        // dp[i][j] = number of arrays with 1..i with j inverse pairs
+        // We can create [0, i-1] new inverse pairs from the subproblem [0..i-1]
+        // dp[i][j] = dp[i-1][j]+dp[i-1][j-1]+...+dp[i-1][j-(i-2)]+dp[i-1][j-(i-1)]             ... eq1
+        // dp[i][j-1] = dp[i-1][j-1]+dp[i-1][j-2]+...+dp[i-1][j-1-(i-2)]+dp[i-1][j-1-(i-1)]     ... eq2
+        // Subtract eq1 and eq2
+        // => dp[i][j] = dp[i-1][j]+dp[i][j-1]-dp[i-1][j-1-(i-1)]
+        // => dp[i][j] = dp[i-1][j]+dp[i][j-1]-dp[i-1][j-i]
+        vector<vector<int>> dp(n+1, vector<int>(k+1, 0));
+        for(int i=0; i<=n; i++){
+            dp[i][0] = 1;
+        }
+        for(int i=1; i<=n; i++){
+            for(int j=1; j<=k; j++){
+                dp[i][j] = (dp[i-1][j]+dp[i][j-1])%MOD;
+                if(j-i>=0){
+                    dp[i][j] = ((dp[i][j]-dp[i-1][j-i])%MOD + MOD)%MOD;
+                }
+            }
+        }
+        return dp[n][k];
+    }
+};
+
+// Alternate Code
 
 #define MOD 1000000007
 

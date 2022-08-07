@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/range-sum-query-2d-immutable/
 
-// method 1 (DP, O(n*m)):
+// Method 1 (DP, O(n*m)):
 
 class NumMatrix {
 public:

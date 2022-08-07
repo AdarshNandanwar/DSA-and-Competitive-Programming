@@ -1,5 +1,7 @@
 // https://leetcode.com/problems/subsets-ii/
 
+// Method 1 (Recursion, Sort Trick, O(2^n))
+
 class Solution {
 public:
     void helper(vector<int> &A, int st, vector<int> & cur, vector<vector<int>> & ans){

@@ -17,3 +17,37 @@ public:
         return v;
     }
 };
+
+// Alternate Code:
+
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+        vector<vector<int>> spiral(n, vector<int>(n, 0));
+        int value = 1;
+        int dist = 0;
+        while(dist <= n/2){
+            for(int j=dist; j<n-dist-1; j++){
+                spiral[dist][j] = value;
+                value++;
+            }      
+            for(int i=dist; i<n-dist-1; i++){
+                spiral[i][n-dist-1] = value;
+                value++;
+            }  
+            for(int j=n-dist-1; j>dist; j--){
+                spiral[n-dist-1][j] = value;
+                value++;
+            } 
+            for(int i=n-dist-1; i>dist; i--){
+                spiral[i][dist] = value;
+                value++;
+            }   
+            dist++;
+        }
+        if(value == n*n){
+            spiral[n/2][n/2] = value;
+        }
+        return spiral;
+    }
+};

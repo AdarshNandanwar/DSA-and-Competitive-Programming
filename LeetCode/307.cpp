@@ -1,6 +1,54 @@
 // https://leetcode.com/problems/range-sum-query-mutable/
 
-// Method 1 (Fenwick Tree, O(nlogn));
+// Method 1 (Fenwick Tree, O(n+qlogn)):
+
+class NumArray {
+    vector<int> bit;
+    void updateBit(int index, int delta){
+        index++;
+        for(int i=index; i<bit.size(); i += (i&(-i))){
+            bit[i] += delta;
+        }
+    }
+    int prefixSum(int index){
+        if(index<0){
+            return 0;
+        }
+        index++;
+        int sum = 0;
+        for(int i=index; i>0; i -= (i&(-i))){
+            sum += bit[i];
+        }
+        return sum;
+    }
+public:
+    NumArray(vector<int>& nums) {
+        int n = nums.size();
+        bit = vector<int>(n+1, 0);
+        for(int i=0; i<n; i++){
+            updateBit(i, nums[i]);
+        }
+    }
+    
+    void update(int index, int val) {
+        int prevVal = sumRange(index, index);
+        int delta = val-prevVal;
+        updateBit(index, delta);
+    }
+    
+    int sumRange(int left, int right) {
+        return prefixSum(right)-prefixSum(left-1);
+    }
+};
+
+/**
+ * Your NumArray object will be instantiated and called as such:
+ * NumArray* obj = new NumArray(nums);
+ * obj->update(index,val);
+ * int param_2 = obj->sumRange(left,right);
+ */
+
+// Method 2 (Fenwick Tree with extra vector, O(n+qlogn));
 
 class NumArray {
 public:

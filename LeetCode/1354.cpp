@@ -31,6 +31,38 @@ public:
     }
 };
 
+// Alternate Code:
+
+class Solution {
+public:
+    bool isPossible(vector<int>& target) {
+        if(target.size() == 1){
+            return target[0] == 1;
+        }
+        priority_queue<long> pq;
+        long sum = 0;
+        for(auto &i:target){
+            pq.push(i);
+            sum += i;
+        }
+        while(pq.top() > 1){
+            long maxElement = pq.top();
+            pq.pop();
+            long remainingSum = sum-maxElement;
+            long nextMaxElement = pq.top();
+            long diff = maxElement-nextMaxElement;
+            long operationCount = max(1l, diff/remainingSum);
+            long prevElement = maxElement-(operationCount*remainingSum);
+            if(prevElement < 1){
+                return false;
+            }
+            sum -= (operationCount*remainingSum);
+            pq.push(prevElement);
+        }
+        return true;
+    }
+};
+
 // Method 2 (Priority Queue, TLE):
 
 class Solution {

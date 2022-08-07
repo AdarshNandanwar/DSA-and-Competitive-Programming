@@ -1,6 +1,30 @@
 // https://leetcode.com/problems/longest-valid-parentheses/
 
-// Method 1 (Stack, O(n)):
+// Method 1 (DP, O(n)):
+
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        int n = s.length();
+        if(n == 0) return 0;
+        // dp[i] = Longest Valid Parentheses ending at index i
+        vector<int> dp(n, 0);
+        for(int i=1; i<n; i++){
+            if(s[i] == ')'){
+                int lvp = dp[i-1];
+                if(i-(lvp+1) >= 0 and s[i-(lvp+1)] == '('){
+                    dp[i] = lvp+2;
+                    if(i-(lvp+2) >= 0){
+                        dp[i] += dp[i-(lvp+2)];
+                    }
+                }
+            }
+        }
+        return *max_element(dp.begin(), dp.end());
+    }
+};
+
+// Method 2 (Stack, O(n)):
 
 class Solution {
 public:
@@ -24,25 +48,5 @@ public:
             }
         }
         return ans;
-    }
-};
-
-// Method 2 (DP, O(n)):
-
-class Solution {
-public:
-    int longestValidParentheses(string s) {
-        int n = s.length(), maxLen = 0;
-        //  dp[i] = Longest Valid Parentheses ending at i
-        vector<int> dp(n, 0);
-        for(int i=1; i<n; i++){
-            if(s[i]==')' and i-1-dp[i-1]>=0 and s[i-1-dp[i-1]] == '('){
-                dp[i] = 2+dp[i-1];
-                if(i-1-dp[i-1]-1>=0)
-                    dp[i] += dp[i-1-dp[i-1]-1];
-            }
-            maxLen = max(maxLen, dp[i]);
-        }
-        return maxLen;
     }
 };

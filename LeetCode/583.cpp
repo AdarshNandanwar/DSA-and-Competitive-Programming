@@ -1,11 +1,12 @@
 // https://leetcode.com/problems/delete-operation-for-two-strings/
 
-// Method 1 (DP, O(n2)):
+// Method 1 (2D DP, O(n2)):
 
 class Solution {
 public:
     int minDistance(string word1, string word2) {
         int l1 = word1.length(), l2 = word2.length();
+        // dp[i][j] = minimum number of steps required to make word1[i..l1-1] and word2[j..l2-1] the same
         vector<vector<int>> dp(l1+1, vector<int>(l2+1, 0));
         // base case
         for(int i = 0; i<l1; i++) dp[i][l2] = l1-i;
