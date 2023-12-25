@@ -1,5 +1,7 @@
 // https://leetcode.com/problems/path-sum-ii/
 
+// Method 1 (Recursion, O(n)):
+
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -12,28 +14,23 @@
  * };
  */
 class Solution {
-public:
-     
-    void helper(TreeNode* A, int B, vector<int> & cur, vector<vector<int>> & ans){
-        if(A == NULL) return;
-        if(A->left == NULL and A->right == NULL) {
-            if(A->val == B) {
-                cur.push_back(A->val);
-                ans.push_back(cur);
-                cur.pop_back();
-            }
+    void helper(TreeNode * root, int targetSum, vector<int> & path, vector<vector<int>> & ans){
+        if(root == nullptr){
             return;
         }
-        cur.push_back(A->val);
-        helper(A->left, B-A->val, cur, ans);
-        helper(A->right, B-A->val, cur, ans);
-        cur.pop_back();
+        path.push_back(root->val);
+        if(root->left==nullptr and root->right==nullptr and targetSum==root->val){
+            ans.push_back(path);
+        }
+        helper(root->left, targetSum-root->val, path, ans);
+        helper(root->right, targetSum-root->val, path, ans);
+        path.pop_back();
     }
-    
-    vector<vector<int>> pathSum(TreeNode* root, int sum) {
+public:
+    vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
         vector<vector<int>> ans;
-        vector<int> cur;
-        helper(root, sum, cur, ans);
+        vector<int> path;
+        helper(root, targetSum, path, ans);
         return ans;
     }
 };

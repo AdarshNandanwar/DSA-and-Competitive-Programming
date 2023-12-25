@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/maximum-length-of-repeated-subarray/
 
-// Method 2 (PD, O(n2));
+// Method 1 (DP, O(n*m));
 
 class Solution {
 public:

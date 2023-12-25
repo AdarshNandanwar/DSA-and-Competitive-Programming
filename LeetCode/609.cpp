@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/find-duplicate-file-in-system/
 
-//  Method 1 (Input string stream):
+// Method 1 (Hash Map, Input String Stream, O(n)):
 
 class Solution {
 public:
@@ -28,6 +28,37 @@ public:
             res.push_back(v);
         }
         
+        return res;
+    }
+};
+
+// Method 1 (Hash Map, Input String Stream, O(n)):
+
+class Solution {
+public:
+    vector<vector<string>> findDuplicate(vector<string>& paths) {
+        int n = paths.size();
+        unordered_map<string, vector<string>> contentToPath;
+        for(int i=0; i<n; i++){
+            istringstream issInfo(paths[i]);
+            string path;
+            getline(issInfo, path, ' ');
+            string fileInfo;
+            while(getline(issInfo, fileInfo, ' ')){
+                string fileName, fileContent;
+                istringstream issFile(fileInfo);
+                getline(issFile, fileName, '(');
+                getline(issFile, fileContent, '(');
+                fileContent.pop_back();
+                contentToPath[fileContent].push_back(path+"/"+fileName);
+            }
+        }
+        vector<vector<string>> res;
+        for(auto &i:contentToPath){
+            if(i.second.size() > 1){
+                res.push_back(i.second);
+            }
+        }
         return res;
     }
 };

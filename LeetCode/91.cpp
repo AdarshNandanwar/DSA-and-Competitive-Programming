@@ -1,5 +1,38 @@
 // https://leetcode.com/problems/decode-ways/
 
+// Method 1 (Recursive, O(n)):
+
+class Solution {
+    int helper(const string & s, int index, vector<int> & dp){
+        int n = s.length();
+        if(index == n){
+            return 1;
+        }
+        if(s[index] == '0'){
+            return 0;
+        }
+        
+        if(dp[index] != -1){
+            return dp[index];
+        }
+
+        int ans = helper(s, index+1, dp);        
+        if(s[index] == '1' and index+1 < n){
+            ans += helper(s, index+2, dp);
+        } else if(s[index] == '2' and index+1<n and s[index+1] >= '0' and s[index+1] <= '6'){
+            ans += helper(s, index+2, dp);
+        }
+        return dp[index] = ans;
+    }
+public:
+    int numDecodings(string s) {
+        vector<int> dp(s.length(), -1);
+        return helper(s, 0, dp);
+    }
+};
+
+// Method 2 (Iterative, O(n)):
+
 class Solution {
 public:
     int numDecodings(string A) {

@@ -62,3 +62,36 @@ public:
         return dummy.next;
     }
 };
+
+// Method 2 (Recursion, O(n)):
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+    // {head, length}
+    pair<ListNode *, int> removeNode(ListNode * head, const int & target){
+        if(head == nullptr){
+            return make_pair(head, 0);
+        }
+        auto res = removeNode(head->next, target);
+        int curLength = res.second+1;
+        if(curLength == target){
+            return make_pair(res.first, curLength);
+        } else {
+            head->next = res.first;
+            return make_pair(head, curLength);
+        }
+    }
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        return removeNode(head, n).first;
+    }
+};
