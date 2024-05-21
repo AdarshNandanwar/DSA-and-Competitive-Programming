@@ -1,24 +1,16 @@
 // https://leetcode.com/problems/first-unique-character-in-a-string/
 
-// Method 1 (O(n)):
+// Method 1 (Hash Map, O(n)):
 
 class Solution {
 public:
     int firstUniqChar(string s) {
-        int n = s.length();
-        vector<int> freq(26, 0);
-        for(int i=0; i<n; i++){
-            freq[s[i]-'a']++;
-        } 
-        char target = '#';
-        for(int i=0; i<n; i++){
-            if(freq[s[i]-'a'] == 1){
-                target = s[i];
-                break;
-            }
+        vector<int> freq(26);
+        for(char c:s){
+            freq[c-'a']++;
         }
-        for(int i=0; i<n; i++){
-            if(s[i] == target){
+        for(int i=0; i<s.length(); i++){
+            if(freq[s[i]-'a'] == 1){
                 return i;
             }
         }

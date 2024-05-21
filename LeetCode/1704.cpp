@@ -13,3 +13,30 @@ public:
         return sum == 0;
     }
 };
+
+// Alternate Code:
+
+class Solution {
+public:
+    bool halvesAreAlike(string s) {
+        int n = s.length(), vowelCount = 0;
+        for(int i=0; i<n; i++){
+            char c = tolower(s[i]);
+            if(
+                c == 'a' or
+                c == 'e' or
+                c == 'i' or
+                c == 'o' or
+                c == 'u'
+            )
+            {
+                if(i<n/2){
+                    vowelCount++;
+                } else {
+                    vowelCount--;
+                }
+            }
+        }
+        return vowelCount == 0;
+    }
+};

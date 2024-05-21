@@ -4,33 +4,42 @@
 
 class RandomizedSet {
 public:
-    
-    unordered_map<int, int> index;
-    vector<int> v;
-    
-    RandomizedSet() {
-        index.clear();
-        v.clear();
-    }
+    vector<int> m_Data;
+    unordered_map<int, int> m_Index;
+
+    RandomizedSet() {}
     
     bool insert(int val) {
-        if(index.count(val)) return false;
-        v.push_back(val);
-        index[val] = v.size()-1;
+        if(m_Index.count(val) != 0){
+            return false;
+        }
+        m_Data.push_back(val);
+        m_Index[val] = m_Data.size()-1;
         return true;
     }
     
     bool remove(int val) {
-        if(!index.count(val)) return false;
-        swap(v[index[val]], v[v.size()-1]);
-        index[v[index[val]]] = index[val];
-        index.erase(val);
-        v.pop_back();
+        if(m_Index.count(val) == 0){
+            return false;
+        }
+
+        int size = m_Data.size();
+        int index = m_Index[val];
+
+        // Here, the order of the following operations is very important due to
+        // 1. Swapping locations (indices)
+        // 2. Handle the case where m_Size = 1
+        swap(m_Data[index], m_Data[size-1]);
+        m_Index[m_Data[index]] = index;
+        m_Index.erase(m_Data[size-1]);
+        m_Data.pop_back();
+
         return true;
     }
     
     int getRandom() {
-        return v[rand()%v.size()];
+        int index = rand() % m_Data.size();
+        return m_Data[index];
     }
 };
 
@@ -42,7 +51,52 @@ public:
  * int param_3 = obj->getRandom();
  */
 
-// Method 2 (list, hash map, O(n) time for random):
+// Method 2 (Static array, hash map, O(1) time):
+
+class RandomizedSet {
+public:
+    int m_Data[200000];
+    int m_Size;
+    unordered_map<int, int> m_Index;
+
+    RandomizedSet() {
+        m_Size = 0;
+    }
+    
+    bool insert(int val) {
+        if(m_Index.count(val) != 0){
+            return false;
+        }
+        m_Data[m_Size] = val;
+        m_Index[val] = m_Size;
+        m_Size++;
+        return true;
+    }
+    
+    bool remove(int val) {
+        if(m_Index.count(val) == 0){
+            return false;
+        }
+        int index = m_Index[val];
+
+        // Here, the order of the following operations is very important due to
+        // 1. Swapping locations (indices)
+        // 2. Handle the case where m_Size = 1
+        swap(m_Data[index], m_Data[m_Size-1]);
+        m_Index[m_Data[index]] = index;
+        m_Index.erase(m_Data[m_Size-1]); // m_Index.erase(val);
+
+        m_Size--;
+        return true;
+    }
+    
+    int getRandom() {
+        int index = rand() % m_Size;
+        return m_Data[index];
+    }
+};
+
+// Method 3 (list, hash map, O(n) time for random):
 
 class RandomizedSet {
 public:
@@ -73,11 +127,3 @@ public:
         return *next(l.begin(), rand()%l.size());
     }
 };
-
-/**
- * Your RandomizedSet object will be instantiated and called as such:
- * RandomizedSet* obj = new RandomizedSet();
- * bool param_1 = obj->insert(val);
- * bool param_2 = obj->remove(val);
- * int param_3 = obj->getRandom();
- */

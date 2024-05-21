@@ -1,6 +1,30 @@
 // https://leetcode.com/problems/squares-of-a-sorted-array/
 
-// Method 1 (binary search, O(n+logn)):
+// Method 1 (2 Pointer, O(n)):
+
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        int n = nums.size();
+        int left = 0;
+        int right = n-1;
+        int index = n-1;
+        vector<int> res(n);
+        while(index >= 0){
+            if(-nums[left] < nums[right]){
+                res[index] = nums[right]*nums[right];
+                right--;
+            } else {
+                res[index] = nums[left]*nums[left];
+                left++;
+            }
+            index--;
+        }
+        return res;
+    }
+};
+
+// Alternate Code:
 
 class Solution {
 public:
@@ -30,7 +54,7 @@ public:
     }
 };
 
-// Method 2 (sorting, O(nlogn)):
+// Method 2 (Sorting, O(nlogn)):
 
 class Solution {
 public:

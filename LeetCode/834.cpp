@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/sum-of-distances-in-tree/
 
-// Method 1 (O(n)):
+// Method 1 (DFS, O(n)):
 
 class Solution {
 public:
@@ -49,6 +49,70 @@ public:
         helper(0, adj_list, visited, data, ans);
         
         return ans;
+    }
+};
+
+// Alternate Code:
+
+class Solution {
+    int fillSubtreeSize(const vector<vector<int>> & nbrs, int pos, vector<bool> & visited, vector<int> & subtreeSize){
+        if(visited[pos] == true){
+            return 0;
+        }
+        visited[pos] = true;
+        subtreeSize[pos] = 1;
+        for(auto nbr:nbrs[pos]){
+            subtreeSize[pos] += fillSubtreeSize(nbrs, nbr, visited, subtreeSize);
+        }
+        return subtreeSize[pos];
+    }
+    int getDistanceSum(const vector<vector<int>> & nbrs, int pos, vector<bool> & visited, const vector<int> & subtreeSize){
+        if(visited[pos] == true){
+            return 0;
+        }
+        visited[pos] = true;
+        int distanceSum = 0;
+        for(auto nbr:nbrs[pos]){
+            if(visited[nbr]){
+                continue;
+            }
+            distanceSum += (getDistanceSum(nbrs, nbr, visited, subtreeSize) + subtreeSize[nbr]);
+        }
+        return distanceSum;
+    }
+    void populateAllDistanceSum(const vector<vector<int>> & nbrs, int pos, const int treeSize, vector<bool> & visited, const vector<int> & subtreeSize, vector<int> & distanceSum){
+        if(visited[pos] == true){
+            return;
+        }
+        visited[pos] = true;
+        for(auto nbr:nbrs[pos]){
+            if(visited[nbr]){
+                continue;
+            }
+            distanceSum[nbr] = (distanceSum[pos] + treeSize - 2*subtreeSize[nbr]);
+            populateAllDistanceSum(nbrs, nbr, treeSize, visited, subtreeSize, distanceSum);
+        }
+    }
+public:
+    vector<int> sumOfDistancesInTree(int n, vector<vector<int>>& edges) {
+        vector<vector<int>> nbrs(n);
+        for(auto & edge:edges){
+            nbrs[edge[0]].push_back(edge[1]);
+            nbrs[edge[1]].push_back(edge[0]);
+        }
+        vector<bool> visited(n, false);
+        vector<int> subtreeSize(n, 0);
+        fillSubtreeSize(nbrs, 0, visited, subtreeSize);
+
+        visited = vector<bool>(n);
+        vector<int> distanceSum(n);
+        distanceSum[0] = getDistanceSum(nbrs, 0, visited, subtreeSize);
+
+        visited = vector<bool>(n);
+        int treeSize = subtreeSize[0];
+        populateAllDistanceSum(nbrs, 0, treeSize, visited, subtreeSize, distanceSum);
+
+        return distanceSum;
     }
 };
 

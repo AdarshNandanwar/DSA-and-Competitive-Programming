@@ -42,3 +42,26 @@ public:
         return res;
     }
 };
+
+// Method 3 (Bit Manipulation, O(1)):
+
+class Solution {
+public:
+    int rangeBitwiseAnd(int left, int right) {
+        int res = 0;
+        for(int i=0; i<32 and (left>>i); i++){
+            if((left&(1<<i)) == 0){
+                continue;
+            }
+            
+            // left =                       11010101101100
+            // i = 5                                ^
+            // nextGreaterWithUnsetBit =    11010110000000
+            long nextGreaterWithUnsetBit = ((((long)left>>i)+1)<<i);
+            if(nextGreaterWithUnsetBit > right){
+                res |= (1<<i);
+            }
+        }
+        return res;
+    }
+};

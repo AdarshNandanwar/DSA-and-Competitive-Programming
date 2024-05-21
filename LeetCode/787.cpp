@@ -46,6 +46,48 @@ public:
     }
 };
 
+// Alternate Code:
+
+class Solution {
+public:
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
+        vector<vector<int>> cost(n, vector<int>(n, INT_MAX));
+        vector<vector<int>> nbrs(n);
+        for(const vector<int>& flight:flights){
+            nbrs[flight[0]].push_back(flight[1]);
+            cost[flight[0]][flight[1]] = flight[2];
+        }
+
+        // Dijkstra's Algorithm
+        // minCost[i][j] = minCost till i with k hops.
+        vector<vector<long>> minCost(n, vector<long>(k+1, INT_MAX));
+        // {cost, hops, dest}
+        priority_queue<vector<long>, vector<vector<long>>, greater<vector<long>>> pq;
+        pq.push({0, 0, src});
+        while(!pq.empty()){
+            int cur = pq.top()[2];
+            long curCost = pq.top()[0];
+            int hops = pq.top()[1];
+            pq.pop();
+            if(cur == dst){
+                return curCost;
+            }
+            if(hops-1 == k){
+                continue;
+            }
+            if(curCost >= minCost[cur][hops]){
+                continue;
+            }
+            minCost[cur][hops] = curCost;
+            for(const int nbr:nbrs[cur]){
+                pq.push({curCost + cost[cur][nbr], hops+1, nbr});
+            }
+        }
+
+        return -1;
+    }
+};
+
 // Method 2 (Bellman Ford Algorithm):
 
 class Solution {

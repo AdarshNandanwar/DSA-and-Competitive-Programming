@@ -1,5 +1,57 @@
 // https://leetcode.com/problems/open-the-lock/
 
+// Method 1 (BFS with int, O(Misc + E + V) = O(d + 10^4 + 8^10^4) = O(d)):
+
+class Solution {
+public:
+    int openLock(vector<string>& deadends, string target) {
+        int targetNode = stoi(target);
+        unordered_set<int> deadendNodes;
+        for(string & deadend:deadends){
+            deadendNodes.insert(stoi(deadend));
+        }
+        int turns = 0;
+        vector<int> visited(10000, false);
+        queue<int> q;
+        q.push(0);
+        visited[0] = true;
+        while(!q.empty()){
+            int sz = q.size();
+            while(sz--){
+                int cur = q.front();
+                q.pop();
+                if(cur == targetNode){
+                    return turns;
+                }
+                if(deadendNodes.count(cur)){
+                    continue;
+                }
+                for(int place=1; place<10000; place*=10){
+                    int digit = (cur/place)%10;
+
+                    int upDigit = (digit+1)%10;
+                    int upNext = cur-(digit*place)+(upDigit*place);
+                    if(!visited[upNext]){
+                        q.push(upNext);
+                        visited[upNext] = true;
+                    }
+
+                    int downDigit = (digit+9)%10;
+                    int downNext = cur-(digit*place)+(downDigit*place);
+                    if(!visited[downNext]){
+                        q.push(downNext);
+                        visited[downNext] = true;
+                    }
+                }
+            }
+            turns++;
+        }
+        return -1;
+    }
+};
+
+// Method 2 (BFS with string, O(10^8)):
+
 class Solution {
 public:
     int openLock(vector<string>& deadends, string target) {

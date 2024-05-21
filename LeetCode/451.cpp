@@ -24,19 +24,23 @@ public:
 class Solution {
 public:
     string frequencySort(string s) {
-        // Bucket Sort
-        int n = s.length();
-        vector<int> freq(128, 0);
-        for(auto &c:s) freq[c]++;
-        unordered_map<int, unordered_set<int>> rev_freq;
-        for(auto &c:s) rev_freq[freq[c]].insert(c);
-        string ans;
-        for(int i=n; i>=0; i--){
-            for(auto &j:rev_freq[i]){
-                ans += string(i, j);
+        unordered_map<char, int> freq;
+        for(const char c:s){
+            freq[c]++;
+        }
+        unordered_map<int, unordered_set<char>> freqToChar;
+        for(const auto& entry:freq){
+            freqToChar[entry.second].insert(entry.first);
+        }
+        string res;
+        for(int count=s.length(); count>=0; count--){
+            if(freqToChar.count(count)){
+                for(const char c:freqToChar[count]){
+                    res += string(count, c);
+                }
             }
         }
-        return ans;
+        return res;
     }
 };
 
@@ -45,10 +49,12 @@ public:
 class Solution {
 public:
     string frequencySort(string s) {
-        unordered_map<int, int> m;
-        for(auto &i:s) m[i]++;
-        sort(s.begin(), s.end(), [&m](const char & a, const char & b){
-            return m[a] == m[b] ? a<b : m[a] > m[b];
+        unordered_map<char, int> freq;
+        for(const char c:s){
+            freq[c]++;
+        }
+        sort(s.begin(), s.end(), [&freq](const char& a, const char& b){
+            return freq[a] == freq[b] ? a > b : freq[a] > freq[b];
         });
         return s;
     }

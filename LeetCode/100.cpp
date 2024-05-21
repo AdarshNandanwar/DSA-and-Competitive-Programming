@@ -1,5 +1,7 @@
 // https://leetcode.com/problems/same-tree/
 
+// Method 1 (Recursive, O(n)):
+
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -16,5 +18,17 @@ public:
     bool isSameTree(TreeNode* p, TreeNode* q) {
         if((p and !q) or (!p and q) or (p and q and p->val^q->val)) return false;
         return (!p and !q) or (isSameTree(p->left, q->left) and isSameTree(p->right, q->right));
+    }
+};
+
+// Alternative Code:
+
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        if(p == nullptr or q == nullptr){
+            return p == q;
+        }
+        return p->val == q->val and isSameTree(p->left, q->left) and isSameTree(p->right, q->right);
     }
 };

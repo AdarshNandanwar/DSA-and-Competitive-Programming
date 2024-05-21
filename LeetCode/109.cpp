@@ -21,6 +21,83 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
+// Method 1 (AVL Tree, works even if input is not sorted, O(nlogn)):
+
+class Solution {
+    unordered_map<TreeNode *, int> heights;
+
+    TreeNode * rotateRight(TreeNode* root){
+        TreeNode * left = root->left;
+        root->left = root->left->right;
+        left->right = root;
+        heights[root] = 1+max(heights[root->left], heights[root->right]);
+        heights[left] = 1+max(heights[left->left], heights[left->right]);
+        return left;
+    }
+
+    TreeNode * rotateLeft(TreeNode* root){
+        TreeNode * right = root->right;
+        root->right = root->right->left;
+        right->left = root;
+        heights[root] = 1+max(heights[root->left], heights[root->right]);
+        heights[right] = 1+max(heights[right->left], heights[right->right]);
+        return right;
+    }
+
+    TreeNode * insert(TreeNode * root, int val){
+        if(root == NULL){
+            TreeNode * cur = new TreeNode(val);
+            heights[cur] = 1;
+            return cur;
+        }
+
+        if(val <= root->val){
+            root->left = insert(root->left, val);
+        } else {
+            root->right = insert(root->right, val);
+        }
+        heights[root] = 1+max(heights[root->left], heights[root->right]);
+
+        int leftHeight = heights[root->left];
+        int rightHeight = heights[root->right];
+        if(abs(leftHeight-rightHeight) > 1){
+            // Imbalance
+            if(val <= root->val){
+                if(val <= root->left->val){
+                    // LL-imbalance
+                    root = rotateRight(root);
+                } else {
+                    // LR-imbalance
+                    root->left = rotateLeft(root->left);
+                    root = rotateRight(root);
+                }
+            } else {
+                if(val <= root->right->val){
+                    // RL-imbalance
+                    root->right = rotateRight(root->right);
+                    root = rotateLeft(root);
+                } else {
+                    // RR-imbalance
+                    root = rotateLeft(root);
+                }
+            }
+        }
+        return root;
+    }
+public:
+    TreeNode* sortedListToBST(ListNode* head) {
+        TreeNode * root;
+        while(head){
+            root = insert(root, head->val);
+            head = head->next;
+        }
+        return root;
+    }
+};
+
+// Method 2 (Recursion, works since input is sorted, O(nlogn)):
+
 class Solution {
 public:
     TreeNode* sortedListToBST(ListNode* head) {
@@ -42,7 +119,7 @@ public:
     }
 };
 
-// Alternate Code (Dummy Variable):
+// Method 3 (Recursion, Alternate Code (Dummy Variable), works since input is sorted, O(nlogn)):
 
 class Solution {
 public:

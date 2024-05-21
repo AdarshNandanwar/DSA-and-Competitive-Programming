@@ -14,20 +14,19 @@
  * };
  */
 class Solution {
-public:
-    
-    // returns depth of subtree
-    int helper(TreeNode* root, int & ans){
-        if(!root) return 0;
-        int l = helper(root->left, ans);
-        int r = helper(root->right, ans);
-        ans = max(ans, l+r);
-        return 1+max(l, r);
+    int getLongestPathLengthToRoot(TreeNode* root, int& diameter){
+        if(root == nullptr){
+            return 0;
+        }
+        int leftPath = getLongestPathLengthToRoot(root->left, diameter);
+        int rightPath = getLongestPathLengthToRoot(root->right, diameter);
+        diameter = max(diameter, leftPath + rightPath);
+        return 1 + max(leftPath, rightPath);
     }
-    
+public:
     int diameterOfBinaryTree(TreeNode* root) {
-        int ans = 0;
-        helper(root, ans);
-        return ans;
+        int diameter = 0;
+        getLongestPathLengthToRoot(root, diameter);
+        return diameter;
     }
 };

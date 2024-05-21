@@ -1,7 +1,5 @@
 // https://leetcode.com/problems/validate-binary-search-tree/
 
-// Method 1 (Recursion, O(n)):
-
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -13,6 +11,35 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
+// Method 1 (Inorder Traversal, O(n)):
+
+class Solution {
+    bool isInOrder(TreeNode * root, long & prev){
+        if(root == nullptr){
+            return true;
+        }
+        if(!isInOrder(root->left, prev)){
+            return false;
+        }
+        if(root->val <= prev){
+            return false;
+        }
+        prev = root->val;
+        if(!isInOrder(root->right, prev)){
+            return false;
+        }
+        return true;
+    }
+public:
+    bool isValidBST(TreeNode* root) {
+        long prev = LONG_MIN;
+        return isInOrder(root, prev);
+    }
+};
+
+// Method 2 (Recursion, O(n)):
+
 class Solution {
 public:
     
@@ -26,19 +53,7 @@ public:
     }
 };
 
-// Method 2 (Recursion, O(n)):
-
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+// Method 3 (Recursion, O(n)):
 
 class TreeInfo {
 public:

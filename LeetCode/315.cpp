@@ -116,3 +116,119 @@ public:
         return smallerRight;
     }
 };
+
+// Method 2 (AVL Tree, O(nlogn)):
+
+class Solution {
+public:
+    struct TreeNode {
+        int val;
+        int height;
+        int size;
+        TreeNode * left;
+        TreeNode * right;
+        TreeNode(int val): val(val), height(1), size(1), left(nullptr), right(nullptr){};
+    };
+
+    int getHeight(TreeNode * root){
+        if(root == nullptr){
+            return 0;
+        }
+        return root->height;
+    }
+
+    int getSize(TreeNode * root){
+        if(root == nullptr){
+            return 0;
+        }
+        return root->size;
+    }
+
+    TreeNode * rotateRight(TreeNode* root){
+        TreeNode * left = root->left;
+        root->left = left->right;
+        left->right = root;
+        root->height = 1 + max(getHeight(root->left), getHeight(root->right));
+        left->height = 1 + max(getHeight(left->left), getHeight(left->right));
+        root->size -= (1 + getSize(left->left));
+        left->size = (1 + getSize(left->left) + getSize(left->right));
+        return left;
+    }
+
+    TreeNode * rotateLeft(TreeNode* root){
+        TreeNode * right = root->right;
+        root->right = right->left;
+        right->left = root;
+        root->height = 1 + max(getHeight(root->left), getHeight(root->right));
+        right->height = 1 + max(getHeight(right->left), getHeight(right->right));
+        root->size -= (1 + getSize(right->right));
+        right->size = (1 + getSize(right->left) + getSize(right->right));
+        return right;
+    }
+
+    TreeNode * insert(TreeNode * root, int val){
+        if(root == nullptr){
+            return new TreeNode(val);
+        }
+        
+        if(val < root->val){
+            root->left = insert(root->left, val);
+        } else {
+            root->right = insert(root->right, val);
+        }
+        root->height = 1 + max(getHeight(root->left), getHeight(root->right));
+        root->size ++;
+
+        int leftHeight = getHeight(root->left);
+        int rightHeight = getHeight(root->right);
+        if(abs(leftHeight-rightHeight) > 1){
+            // Imbalance
+            if(val < root->val){
+                if(val < root->left->val){
+                    // LL-imbalance
+                    root = rotateRight(root);
+                } else {
+                    // LR-imbalance
+                    root->left = rotateLeft(root->left);
+                    root = rotateRight(root);
+                }
+            } else {
+                if(val < root->right->val){
+                    // RL-imbalance
+                    root->right = rotateRight(root->right);
+                    root = rotateLeft(root);
+                } else {
+                    // RR-imbalance
+                    root = rotateLeft(root);
+                }
+            }
+        }
+        return root;
+    }
+
+    int countSmaller(TreeNode * root, int val){
+        if(root == NULL){
+            return 0;
+        }
+        int count = 0;
+        if(val <= root->val){
+            count += countSmaller(root->left, val);
+        } else {
+            count ++;
+            count += getSize(root->left);
+            count += countSmaller(root->right, val);
+        }
+        return count;
+    }
+
+    vector<int> countSmaller(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> counts;
+        TreeNode * root = nullptr;
+        for(int i=n-1; i>=0; i--){
+            counts.push_back(countSmaller(root, nums[i]));
+            root = insert(root, nums[i]);
+        }
+        return vector<int>(counts.rbegin(), counts.rend());
+    }
+};

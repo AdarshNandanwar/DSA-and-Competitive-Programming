@@ -48,6 +48,37 @@ public:
     }
 };
 
+// Alternate Code:
+
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        int totalTasks = tasks.size();
+
+        vector<int> freq(26, 0);
+        int maxFreq = 0;
+        for(const char task:tasks){
+            freq[task-'A']++;
+            if(freq[task-'A'] > maxFreq){
+                maxFreq = freq[task-'A'];
+            }
+        }
+
+        int idleTime = n*(maxFreq-1);
+        int maxFreqCount = 0;
+        for(int i=0; i<26; i++){
+            if(freq[i] == maxFreq){
+                maxFreqCount++;
+            }
+        }
+        
+        int remainingTasks = totalTasks - maxFreq - (maxFreqCount-1);
+        // Max freq task that forms boundary of buckets + Extra extension after last boundary + Extra tasks if they are more than idle Time
+        // [x...x...x] (= 3)  + [x...x...xyz] (= 3) = [x***x***xyz] (= 6) + [x***abx***cdexyz] (= 5)
+        return maxFreq + (maxFreqCount-1) + idleTime + max(remainingTasks-idleTime, 0);
+    }
+};
+
 // Method 2 (Greedy, O(n*tasks.size()):
 
 struct Cmp{

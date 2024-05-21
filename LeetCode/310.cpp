@@ -5,6 +5,55 @@
 class Solution {
 public:
     vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
+        if(n == 1){
+            return {0};
+        }
+
+        vector<int> inDeg(n, 0);
+        vector<vector<int>> adj(n);
+        for(auto & edge:edges){
+            inDeg[edge[0]]++;
+            inDeg[edge[1]]++;
+            adj[edge[0]].push_back(edge[1]);
+            adj[edge[1]].push_back(edge[0]);
+        }
+        queue<int> q;
+        for(int i=0; i<n; i++){
+            if(inDeg[i] == 1){
+                q.push(i);
+            }
+        }
+
+        int remaining = n;
+        while(remaining > 2){
+            int sz = q.size();
+            while(sz--){
+                int cur = q.front();
+                q.pop();
+                remaining--;
+                for(int nbr:adj[cur]){
+                    inDeg[nbr]--;
+                    if(inDeg[nbr] == 1){
+                        q.push(nbr);
+                    }
+                }
+            }
+        }
+        
+        vector<int> res;
+        while(!q.empty()){
+            res.push_back(q.front());
+            q.pop();
+        }
+        return res;
+    }
+};
+
+// Alternate Code:
+
+class Solution {
+public:
+    vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
         int remaining = n, maxVal = 0;
         vector<int> deg(n, 0), maxHeight(n, 0), visited(n, 0);
         vector<vector<int>> nbrs(n, vector<int>(0));

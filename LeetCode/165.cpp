@@ -1,5 +1,49 @@
 // https://leetcode.com/problems/compare-version-numbers/
 
+// Method 1 (IStringStream, O(n)):
+
+class Solution {
+public:
+    int compareVersion(string version1, string version2) {
+        string rev1, rev2;
+        auto iss1 = istringstream(version1);
+        auto iss2 = istringstream(version2);
+        while(true){
+            if(getline(iss1, rev1, '.')){
+                if(getline(iss2, rev2, '.')){
+                    int intRev1 = stoi(rev1);
+                    int intRev2 = stoi(rev2);
+                    if(intRev1 == intRev2){
+                        continue;
+                    } else {
+                        return intRev1 > intRev2 ? 1 : -1;
+                    }
+                } else {
+                    if(stoi(rev1) != 0){
+                        return 1;
+                    }
+                    while(getline(iss1, rev1, '.')){
+                        if(stoi(rev1) != 0){
+                            return 1;
+                        }
+                    }
+                    return 0;
+                }
+            } else {
+                while(getline(iss2, rev2, '.')){
+                    if(stoi(rev2) != 0){
+                        return -1;
+                    }
+                }
+                return 0;
+            }
+        }
+        return 0;
+    }
+};
+
+// Alternate Code:
+
 class Solution {
 public:
     
