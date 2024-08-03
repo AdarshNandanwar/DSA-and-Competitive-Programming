@@ -99,3 +99,41 @@ public:
         return nums;
     }
 };
+
+// Method 4 (Merge Sort, O(nlogn)):
+
+class Solution {
+    void mergeSort(vector<int> & nums, int st, int end){
+        if(end - st <= 1){
+            return;
+        }
+
+        int mid = st + (end-st)/2;
+        mergeSort(nums, st, mid);
+        mergeSort(nums, mid, end);
+
+        vector<int> v(end-st);
+        int p1 = st, p2 = mid, index = 0;
+        while(p1<mid and p2<end){
+            if(nums[p1] < nums[p2]){
+                v[index++] = nums[p1++];
+            } else {
+                v[index++] = nums[p2++];
+            }
+        }
+        while(p1<mid){
+            v[index++] = nums[p1++];
+        }
+        while(p2<end){
+            v[index++] = nums[p2++];
+        }
+        for(int i=0; i<v.size(); i++){
+            nums[i+st] = v[i];
+        }
+    }
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        mergeSort(nums, 0, nums.size());
+        return nums;
+    }
+};
