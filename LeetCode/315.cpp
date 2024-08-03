@@ -1,6 +1,45 @@
 // https://leetcode.com/problems/count-of-smaller-numbers-after-self/
 
-// Method 1 (Merge Sort, O(nlogn)):
+// Method 1 (Fenwick Tree, O(nlong)):
+
+class Solution {
+    void insert(vector<int> & bit, int index, int val){
+        index++;
+        for(int i=index; i<bit.size(); i += (i&(-i))){
+            bit[i] += val;
+        }
+    }
+    int getPrefixSum(vector<int> & bit, int index){
+        index++;
+        int sum = 0;
+        for(int i=index; i>0; i -= (i&(-i))){
+            sum += bit[i];
+        }
+        return sum;
+    }
+public:
+    vector<int> countSmaller(vector<int>& nums) {
+        int n = nums.size();
+
+        // PreProcess - Make all valus positive
+        for(int i=0; i<n; i++){
+            nums[i] += 1e4;
+        }
+
+        // Fenwick Tree
+        vector<int> bit(2e4 + 2); // getPrefixSum(i) = freq of elements [0, 1, 2, ... i]
+
+        vector<int> res(n);
+        for(int i=n-1; i>=0; i--){
+            res[i] = getPrefixSum(bit, nums[i]-1);
+            insert(bit, nums[i], 1);
+        }
+
+        return res;
+    }
+};
+
+// Method 2 (Merge Sort, O(nlogn)):
 
 class Solution {
 public:
@@ -117,7 +156,7 @@ public:
     }
 };
 
-// Method 2 (AVL Tree, O(nlogn)):
+// Method 3 (AVL Tree, O(nlogn)):
 
 class Solution {
 public:
