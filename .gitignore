@@ -2,4 +2,4 @@
 *.exe
 temp.cpp
 tempcodeRunnerFile.cpp
-a.out
+**/a.out
